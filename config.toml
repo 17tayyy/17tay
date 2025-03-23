@@ -1,0 +1,56 @@
+baseURL = "https://17tay.pages.dev/"
+languageCode = "en-us"
+title = "17tay"
+theme = "PaperMod"
+paginate = 10
+enableInlineShortcodes = true
+buildDrafts = false
+buildFuture = false
+buildExpired = false
+defaultContentLanguage = "en"
+googleAnalytics = ""
+disqusShortname = ""
+[params]
+  env = "production"
+  title = "17tay"
+  description = "Blog técnico de ciberseguridad, pentesting y programación"
+  author = "17tay"
+  ShowReadingTime = true
+  ShowShareButtons = true
+  ShowPostNavLinks = true
+  ShowBreadCrumbs = true
+  ShowCodeCopyButtons = true
+  defaultTheme = "dark"
+  disableThemeToggle = false
+  ShowWordCount = true
+
+  [params.profileMode]
+    enabled = true
+    title = "17tay"
+    subtitle = "Chaval de 17 años apasionado por la ciberseguridad ofensiva, el pentesting y el desarrollo técnico."
+    imageUrl = "" # Puedes meter tu avatar más adelante
+    imageTitle = "Mi avatar"
+    buttons = [
+      { name = "GitHub", url = "https://github.com/17tayyy" },
+      { name = "Hack The Box", url = "https://app.hackthebox.com/profile/2019721" },
+      { name = "Contacto", url = "mailto:oscarfdst@proton.me" }
+    ]
+
+[menu]
+  [[menu.main]]
+    identifier = "posts"
+    name = "Posts"
+    url = "/posts/"
+    weight = 1
+
+  [[menu.main]]
+    identifier = "tags"
+    name = "Tags"
+    url = "/tags/"
+    weight = 2
+
+  [[menu.main]]
+    identifier = "categories"
+    name = "Categories"
+    url = "/categories/"
+    weight = 3
