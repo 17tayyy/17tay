@@ -16,6 +16,7 @@ disqusShortname = ""
   title = "17tay"
   description = "Blog técnico de ciberseguridad, pentesting y programación"
   author = "17tay"
+  hideFooter = true
   ShowReadingTime = true
   ShowShareButtons = false
   ShowPostNavLinks = true
@@ -34,10 +35,10 @@ disqusShortname = ""
     imageUrl = "images/tay.png"
     imageTitle = "Mi avatar"
     buttons = [
-      {name = "Ver mis posts", url = "/posts/"},
+      { name = "Ver mis posts", url = "/posts/"},
       { name = "GitHub", url = "https://github.com/17tayyy" },
       { name = "Hack The Box", url = "https://app.hackthebox.com/profile/2019721" },
-      {name = "Twitter", url = "https://x.com/17tayyy"},
+      { name = "Twitter", url = "https://x.com/17tayyy"},
       { name = "Contacto", url = "mailto:oscarfdst@proton.me" }
     ]
 

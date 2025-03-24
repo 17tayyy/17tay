@@ -3,6 +3,7 @@ title: "¿Quién soy y qué hago aquí?"
 date: 2025-03-24
 tags: ["presentación", "ciberseguridad", "blog"]
 categories: ["Personal"]
+draft: false
 ---
 
 Soy **tay**, un chaval de 17 años que le encanta la ciberseguridad ofensiva, la programación, el pentesting y romper cosas para entenderlas.
