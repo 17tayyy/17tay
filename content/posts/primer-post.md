@@ -15,4 +15,4 @@ He montado este blog para compartir:
 
 Estoy en GitHub, Hack The Box, y en mil terminales abiertas a la vez.
 
-Bienvenido a mi laboratorio digital 💻
+¡Bienvenido a mi blog!
