@@ -1,0 +1,25 @@
+{{- with site.Params.profileMode }}
+<section class="profile">
+  <div class="profile-inner">
+    {{- if .imageUrl }}
+      <div class="avatar"><img src="{{ .imageUrl | absURL }}" alt="{{ .imageTitle }}"></div>
+    {{- end }}
+    <h1 class="name">{{ .title }}</h1>
+    <p class="bio">{{ .subtitle }}</p>
+    {{- if .buttons }}
+      <div class="buttons">
+        {{- range .buttons }}
+          <a class="button" href="{{ .url }}" target="_blank" rel="noopener">
+            {{- if eq .name "GitHub" }}<i class="fab fa-github"></i> {{ end -}}
+            {{- if eq .name "Hack The Box" }}<img src="/images/htb-icon.svg" alt="HTB" style="height: 16px; vertical-align: text-bottom; margin-right: 4px;">{{ end -}}
+            {{- if eq .name "Twitter" }}<i class="fab fa-twitter"></i> {{ end -}}
+            {{- if eq .name "Contacto" }}<i class="fas fa-envelope"></i> {{ end -}}
+            {{- if eq .name "Ver mis posts" }}<i class="fas fa-book"></i> {{ end -}}
+            {{ .name }}
+          </a>
+        {{- end }}
+      </div>
+    {{- end }}
+  </div>
+</section>
+{{- end }}

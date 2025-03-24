@@ -5,7 +5,7 @@ tags: ["presentación", "ciberseguridad", "blog"]
 categories: ["Personal"]
 ---
 
-Soy **tay**, un chaval de 17 años que flipa con la ciberseguridad ofensiva, el desarrollo de herramientas, el pentesting y romper cosas para entenderlas.
+Soy **tay**, un chaval de 17 años que le encanta la ciberseguridad ofensiva, la programación, el pentesting y romper cosas para entenderlas.
 
 He montado este blog para compartir:
 - Proyectos técnicos (malwares, C2s, scripts...)
