@@ -1,15 +1,18 @@
 ---
-title: "Cómo empecé en ciberseguridad con 17 años"
+title: "¿Quién soy y qué hago aquí?"
 date: 2025-03-24
-tags: ["presentación", "ciberseguridad", "pentesting"]
+tags: ["presentación", "ciberseguridad", "blog"]
 categories: ["Personal"]
 ---
 
-¡Muy buenas! Soy Oscar, también conocido como **17tay**, y tengo 17 años.  
-Desde hace tiempo me flipa todo lo relacionado con la ciberseguridad, la programación y el pentesting.
+Soy **tay**, un chaval de 17 años que flipa con la ciberseguridad ofensiva, el desarrollo de herramientas, el pentesting y romper cosas para entenderlas.
 
-He montado este blog para compartir mis proyectos, análisis técnicos, writeups y movidas que me molan del mundillo ofensivo.
+He montado este blog para compartir:
+- Proyectos técnicos (malwares, C2s, scripts...)
+- Writeups de CTFs y máquinas (HTB, etc.)
+- Cosillas de programación y reversing
+- Avances, ideas y errores en el camino
 
-Uso Hack The Box (llevo unas 25 máquinas), desarrollo mis propios malwares, C2s y scripts en GitHub, y sigo aprendiendo cada día.
+Estoy en GitHub, Hack The Box, y en mil terminales abiertas a la vez.
 
-Si has llegado hasta aquí, ¡bienvenido al blog!
+Bienvenido a mi laboratorio digital 💻

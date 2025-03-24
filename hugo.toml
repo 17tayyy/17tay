@@ -10,6 +10,7 @@ buildExpired = false
 defaultContentLanguage = "en"
 googleAnalytics = ""
 disqusShortname = ""
+
 [params]
   env = "production"
   title = "17tay"
@@ -23,18 +24,26 @@ disqusShortname = ""
   defaultTheme = "dark"
   disableThemeToggle = false
   ShowWordCount = true
+  ShowRecentPosts = true
+  recentPostCount = 3
 
   [params.profileMode]
     enabled = true
     title = "17tay"
-    subtitle = "Chaval de 17 años apasionado por la ciberseguridad ofensiva, el pentesting y el desarrollo técnico."
-    imageUrl = "" # Puedes meter tu avatar más adelante
+    subtitle = "Red Teamer en progreso. Blog de pentesting, malware, CTFs y más."
+    imageUrl = "images/tay.png"
     imageTitle = "Mi avatar"
     buttons = [
       { name = "GitHub", url = "https://github.com/17tayyy" },
       { name = "Hack The Box", url = "https://app.hackthebox.com/profile/2019721" },
       { name = "Contacto", url = "mailto:oscarfdst@proton.me" }
     ]
+
+  [params.homeInfoParams]
+    Title = "Bienvenido al blog de 17tay"
+    Content = """
+    Aquí encontrarás artículos técnicos, writeups, herramientas ofensivas, y mis avances en el mundillo ciber.
+    """
 
 [menu]
   [[menu.main]]
