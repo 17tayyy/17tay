@@ -308,7 +308,7 @@ Esta sería la función que se encarga de iniciar el servidor y de ponerse en es
 
 A partir de esta base fui mejorando el proyecto paso a paso: reestructurando el código, añadiendo nuevas funciones y centrándome sobre todo en hacerlo más estructurado y escalable. Lo que has visto aquí es solo el inicio, una especie de **mínimo viable** funcional.
 
-En el [repositorio de GitHub](https://github.com/17tayyy/TgRAT) (Esta privado aun, estoy retocando cosas 😂) he dejado un **roadmap** con todas las mejoras que tengo previstas. Algunas de las más interesantes son:
+En el [repositorio de GitHub](https://github.com/17tayyy/TgRAT) he dejado un **roadmap** con todas las mejoras que tengo previstas. Algunas de las más interesantes son:
 
 - Sistema de autenticación para agentes (con clave precompartida o firmas).
 - Persistencia del agente en el sistema (registro, tareas programadas…).
