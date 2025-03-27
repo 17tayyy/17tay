@@ -1,0 +1,22 @@
+<article class="post-entry">
+  <header class="entry-header">
+    <h2>
+      <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+    </h2>
+  </header>
+  {{- if .Params.cover.image }}
+    <div class="entry-cover">
+      <a href="{{ .RelPermalink }}">
+        <img src="{{ .Params.cover.image | absURL }}" alt="{{ .Params.cover.alt | default .Title }}">
+      </a>
+    </div>
+  {{- end }}
+  {{- if .Params.summary }}
+    <div class="entry-content">
+      <p>{{ .Params.summary }}</p>
+    </div>
+  {{- end }}
+  <footer class="entry-footer">
+    <span title="{{ .Date }}">{{ .Date.Format "Jan 2, 2006" }}</span>
+  </footer>
+</article>

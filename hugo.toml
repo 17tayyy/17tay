@@ -13,9 +13,13 @@ disqusShortname = ""
 
 [params]
   env = "production"
+  ShowImage = true
   title = "17tay"
+  mainSections = ["posts"]
   description = "Blog técnico de ciberseguridad, pentesting y programación"
   author = "17tay"
+  showImageInList = true
+  showImageInSingle = true
   hideFooter = true
   ShowReadingTime = true
   ShowShareButtons = false

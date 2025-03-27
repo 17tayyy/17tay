@@ -1,0 +1,70 @@
+<div class="profile">
+  {{- with site.Params.profileMode }}
+  <div class="profile_inner">
+    {{- if .imageUrl -}}
+    {{- $img := "" }}
+    {{- if not (urls.Parse .imageUrl).IsAbs }}
+      {{- $img = resources.Get .imageUrl }}
+    {{- end }}
+    {{- if $img }}
+      {{- $processableFormats := (slice "jpg" "jpeg" "png" "tif" "bmp" "gif") -}}
+      {{- if hugo.IsExtended -}}
+        {{- $processableFormats = $processableFormats | append "webp" -}}
+      {{- end -}}
+      {{- $prod := (hugo.IsProduction | or (eq site.Params.env "production")) }}
+      {{- if and (in $processableFormats $img.MediaType.SubType) (eq $prod true)}}
+        {{- if (not (and (not .imageHeight) (not .imageWidth))) }}
+          {{- $img = $img.Resize (printf "%dx%d" .imageWidth .imageHeight) }}
+        {{- else if .imageHeight }}
+          {{- $img = $img.Resize (printf "x%d" .imageHeight) }}
+        {{ else if .imageWidth }}
+          {{- $img = $img.Resize (printf "%dx" .imageWidth) }}
+        {{ else }}
+          {{- $img = $img.Resize "150x150" }}
+        {{- end }}
+      {{- end }}
+      <img draggable="false" src="{{ $img.Permalink }}" alt="{{ .imageTitle | default "profile image" }}" title="{{ .imageTitle }}"
+        height="{{ .imageHeight | default 150 }}" width="{{ .imageWidth | default 150 }}" />
+    {{- else }}
+      <img draggable="false" src="{{ .imageUrl | absURL }}" alt="{{ .imageTitle | default "profile image" }}" title="{{ .imageTitle }}"
+        height="{{ .imageHeight | default 150 }}" width="{{ .imageWidth | default 150 }}" />
+    {{- end }}
+    {{- end }}
+
+    <h1>{{ .title | default site.Title | markdownify }}</h1>
+    <span>{{ .subtitle | markdownify }}</span>
+
+    <div class="buttons">
+      {{- range .buttons }}
+      <a class="button" href="{{ trim .url " " }}" rel="noopener" title="{{ .name }}" target="_blank">
+        <span class="button-inner">
+          {{- if eq .name "GitHub" }}<i class="fab fa-github"></i>&nbsp;{{ end -}}
+          {{- if eq .name "Twitter" }}<i class="fab fa-twitter"></i>&nbsp;{{ end -}}
+          {{- if eq .name "Contacto" }}<i class="fas fa-envelope"></i>&nbsp;{{ end -}}
+          {{- if eq .name "Ver mis posts" }}<i class="fas fa-book"></i>&nbsp;{{ end -}}
+          {{ .name }}
+        </span>
+      </a>
+      {{- end }}
+    </div>
+  </div>
+  {{- end }}
+</div>
+
+{{- if site.Params.ShowRecentPosts }}
+<section class="section recent-posts">
+  <div class="container">
+    <div class="section-title" style="margin-bottom: 2rem;"> <!-- Espacio bajo el título -->
+      <h2>{{ i18n "recentPosts" | default "Posts Recientes" }}</h2>
+    </div>
+    <div class="posts">
+      {{ $mainSections := site.Params.mainSections | default (slice "posts") }}
+      {{ $pages := where site.RegularPages "Section" "in" $mainSections }}
+      {{ $pages = $pages | first site.Params.recentPostCount }}
+      {{ range $pages }}
+        {{ partial "post_card.html" . }}
+      {{ end }}
+    </div>
+  </div>
+</section>
+{{- end }}
