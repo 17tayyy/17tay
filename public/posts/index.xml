@@ -13,7 +13,7 @@
       <link>http://localhost:1313/posts/post-c2-sobre-telegram/</link>
       <pubDate>Tue, 25 Mar 2025 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/posts/post-c2-sobre-telegram/</guid>
-      <description>Introdución En este post voy a explicar como desarrollé un sistema de Command and Control (C2) utilizando Telegram como canal de comunicaciones. La idea era tener algo desplegable desde qualquier dispositivo, que fuera discreto y que no dependiera de servidores caros o infraestructuras complejas, Entonces valore dos opciones o Discord o Telegram, ya que la implementación de sus APIs es fácil de usar, alfinal me quedé con Telegram.
+      <description>Introdución En este post voy a explicar como desarrollé un sistema de Command and Control (C2) utilizando Telegram como canal de comunicaciones. La idea era tener algo desplegable desde cualquier dispositivo, que fuera discreto y que no dependiera de servidores caros o infraestructuras complejas, Entonces valoré dos opciones o Discord o Telegram, ya que la implementación de sus APIs es fácil de usar, al final me quedé con Telegram.
 ¿Por qué Telegram?</description>
     </item>
     <item>
