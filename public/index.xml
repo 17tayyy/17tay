@@ -6,8 +6,20 @@
     <description>Recent content on 17tay</description>
     <generator>Hugo -- 0.131.0</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 25 Mar 2025 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 21 Apr 2025 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Como ser 100% anónimo en internet</title>
+      <link>http://localhost:1313/posts/como-ser-anonimo-en-internet/</link>
+      <pubDate>Mon, 21 Apr 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/como-ser-anonimo-en-internet/</guid>
+      <description>Índice Introducción Explicación
+2.1. ¿Qué es una VPN?
+2.2. Tor
+2.3. ¿Qué es el fingerprinting?
+2.4. Diferencia entre anonimato y privacidad
+2.5. ¿Qué es una máquina virtual y por qué es útil? Mi idea: &amp;ldquo;Anonimato en capas&amp;rdquo; Introducción Hoy en dia, vivimos en una época donde cada clic, cada búsqueda y cada conexión que hacemos deja un rastro. Redes publicitarias, corporaciones, mafias y hasta Gobiernos pelean por tus datos, por saber quién eres, qué haces y por qué.</description>
+    </item>
     <item>
       <title>Controlando bots con Telegram: así hice mi propio C2</title>
       <link>http://localhost:1313/posts/post-c2-sobre-telegram/</link>

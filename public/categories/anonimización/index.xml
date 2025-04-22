@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Anonimización on 17tay</title>
+    <link>http://localhost:1313/categories/anonimizaci%C3%B3n/</link>
+    <description>Recent content in Anonimización on 17tay</description>
+    <generator>Hugo -- 0.131.0</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 21 Apr 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/categories/anonimizaci%C3%B3n/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Como ser 100% anonimo en internet</title>
+      <link>http://localhost:1313/posts/como-ser-anonimo-en-internet/</link>
+      <pubDate>Mon, 21 Apr 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/como-ser-anonimo-en-internet/</guid>
+      <description></description>
+    </item>
+  </channel>
+</rss>
