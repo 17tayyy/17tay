@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Convierte Telegram en tu nube privada: gratis, cifrada y sin límites | 17tay</title>
+<meta name="keywords" content="cloud, python, blog, telegram">
+<meta name="description" content="Índice ¿Por qué Telegram como cloud? ¿Qué hace TgCloudCLI? Instalación y configuración Primeros pasos Ejemplo real ¿Qué hay detrás? Roadmap de lo que se viene Imágenes Preguntas frecuentes Seguridad y privacidad ¿Te mola la idea? Introducción ¿Y si pudieras tener tu propio sistema de almacenamiento en la nube, ilimitado, gratuito y con cifrado opcional para mayor privacidad?
+Pues eso mismo se me ocurrió un día trasteando con un proyecto personal —concretamente TgRAT, un command and control sobre Telegram— cuando vi que se podían mover archivos desde un ordenador a Telegram de forma fácil y rápida.">
+<meta name="author" content="17tay">
+<link rel="canonical" href="http://localhost:1313/posts/tgcloud/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.css" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost:1313/apple-touch-icon.png">
+<link rel="mask-icon" href="http://localhost:1313/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/posts/tgcloud/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+</noscript>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/js/all.min.js" crossorigin="anonymous"></script>
+
+  
+
+<meta property="og:url" content="http://localhost:1313/posts/tgcloud/">
+  <meta property="og:site_name" content="17tay">
+  <meta property="og:title" content="Convierte Telegram en tu nube privada: gratis, cifrada y sin límites">
+  <meta property="og:description" content="Índice ¿Por qué Telegram como cloud? ¿Qué hace TgCloudCLI? Instalación y configuración Primeros pasos Ejemplo real ¿Qué hay detrás? Roadmap de lo que se viene Imágenes Preguntas frecuentes Seguridad y privacidad ¿Te mola la idea? Introducción ¿Y si pudieras tener tu propio sistema de almacenamiento en la nube, ilimitado, gratuito y con cifrado opcional para mayor privacidad?
+Pues eso mismo se me ocurrió un día trasteando con un proyecto personal —concretamente TgRAT, un command and control sobre Telegram— cuando vi que se podían mover archivos desde un ordenador a Telegram de forma fácil y rápida.">
+  <meta property="og:locale" content="en-us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-06-02T00:00:00+00:00">
+    <meta property="article:modified_time" content="2025-06-02T00:00:00+00:00">
+    <meta property="article:tag" content="Cloud">
+    <meta property="article:tag" content="Python">
+    <meta property="article:tag" content="Blog">
+    <meta property="article:tag" content="Telegram">
+    <meta property="og:image" content="http://localhost:1313/images/TgCloud/portada.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://localhost:1313/images/TgCloud/portada.png">
+<meta name="twitter:title" content="Convierte Telegram en tu nube privada: gratis, cifrada y sin límites">
+<meta name="twitter:description" content="Índice ¿Por qué Telegram como cloud? ¿Qué hace TgCloudCLI? Instalación y configuración Primeros pasos Ejemplo real ¿Qué hay detrás? Roadmap de lo que se viene Imágenes Preguntas frecuentes Seguridad y privacidad ¿Te mola la idea? Introducción ¿Y si pudieras tener tu propio sistema de almacenamiento en la nube, ilimitado, gratuito y con cifrado opcional para mayor privacidad?
+Pues eso mismo se me ocurrió un día trasteando con un proyecto personal —concretamente TgRAT, un command and control sobre Telegram— cuando vi que se podían mover archivos desde un ordenador a Telegram de forma fácil y rápida.">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "http://localhost:1313/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Convierte Telegram en tu nube privada: gratis, cifrada y sin límites",
+      "item": "http://localhost:1313/posts/tgcloud/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Convierte Telegram en tu nube privada: gratis, cifrada y sin límites",
+  "name": "Convierte Telegram en tu nube privada: gratis, cifrada y sin límites",
+  "description": "Índice ¿Por qué Telegram como cloud? ¿Qué hace TgCloudCLI? Instalación y configuración Primeros pasos Ejemplo real ¿Qué hay detrás? Roadmap de lo que se viene Imágenes Preguntas frecuentes Seguridad y privacidad ¿Te mola la idea? Introducción ¿Y si pudieras tener tu propio sistema de almacenamiento en la nube, ilimitado, gratuito y con cifrado opcional para mayor privacidad?\nPues eso mismo se me ocurrió un día trasteando con un proyecto personal —concretamente TgRAT, un command and control sobre Telegram— cuando vi que se podían mover archivos desde un ordenador a Telegram de forma fácil y rápida.",
+  "keywords": [
+    "cloud", "python", "blog", "telegram"
+  ],
+  "articleBody": "Índice ¿Por qué Telegram como cloud? ¿Qué hace TgCloudCLI? Instalación y configuración Primeros pasos Ejemplo real ¿Qué hay detrás? Roadmap de lo que se viene Imágenes Preguntas frecuentes Seguridad y privacidad ¿Te mola la idea? Introducción ¿Y si pudieras tener tu propio sistema de almacenamiento en la nube, ilimitado, gratuito y con cifrado opcional para mayor privacidad?\nPues eso mismo se me ocurrió un día trasteando con un proyecto personal —concretamente TgRAT, un command and control sobre Telegram— cuando vi que se podían mover archivos desde un ordenador a Telegram de forma fácil y rápida. Entonces pensé: “Tío, esto se podría usar para algo mucho mejor como tu propio sistema de cloud personal”. Pero lo más bestia es que era gratis y, entre comillas, ilimitado.\nDigo “entre comillas” porque Telegram tiene sus límites: por ejemplo, el tamaño máximo por archivo es de 2 GB. Pero, siendo realistas, eso es más que suficiente para la mayoría de cosas. Aun así, tengo alguna idea en mente para bypassear esa limitación… ya iré desarrollándola más adelante.\nTotal, que con toda esta movida nació TgCloud. Al principio era solo una herramienta CLI que convertía Telegram en tu servidor personal de archivos. Y eso es justo lo que te vengo a presentar en este post: TgCloudCLI.\nLe pongo “CLI” porque esta herramienta es solo la primera parte del proyecto TgCloud. Actualmente también estoy trabajando en una API para poder integrarlo en una web y permitir almacenar todo el contenido directamente en Telegram, de forma cómoda y accesible.\nTgCloudCLI está desarrollada en Python, y te permite subir y descargar archivos desde Telegram, directamente desde tu terminal, sin complicaciones.\n¿Por qué Telegram como cloud? Mira, voy a ser sincero: Telegram lleva quemando pasta desde hace años. De verdad, no sé ni cómo no han cerrado todavía. Supongo que sobreviven gracias a las donaciones del propio Dúrov (el fundador) y a lo poco que sacan de Telegram Premium.\n¿Y por qué digo que queman pasta? Pues básicamente porque te ofrecen un montón de servicios gratis —entre ellos el almacenamiento en la nube— que te permite guardar teras y teras de datos sin pagar un euro. Y lo más loco es que no hay un límite realista (más allá del tamaño por archivo).\nAdemás, cuentan con:\nAPIs brutales Bots rapidísimos Cero anuncios Infraestructura que responde en milisegundos Parece que están apostando por captar a la mayor cantidad de usuarios posible, y luego monetizar vendiendo pequeños productos o servicios (como Premium).\nLa conclusión es que Telegram no está pensado como un servicio de cloud, así que hay que ser un poco ingenioso…\nY ahí es donde entra TgCloud.\n¿Qué hace TgCloudCLI? TgCloudCLI es una herramienta en línea de comandos que te permite gestionar múltiples archivos usando carpetas virtuales de forma organizada. Puedes:\nSubir archivos Descargar archivos Crear carpetas Todo esto, directamente desde Telegram Lo bueno de TgCloudCLI es que es muy sencilla de usar, rápida y, lo mejor de todo: gratuita e ilimitada (dentro de los límites de Telegram).\n⚠️ Por ahora, está centrado en funcionalidades básicas. Estoy trabajando en una API REST y, más adelante, una interfaz web para gestionar los archivos desde cualquier navegador.\n🛠️ Instalación y configuración Configurar TgCloudCLI es muy fácil. Solo necesitas Python 3.8 o superior, una cuenta de Telegram y ganas de exprimir tu terminal.\n1. Clona el repositorio git clone https://github.com/17tayyy/TgCloudCLI.git cd TgCloudCLI 2. (Opcional) Crea un entorno virtual No es obligatorio, pero recomendable:\npython3 -m venv .venv source .venv/bin/activate 3. Instala las dependencias pip install -r requirements.txt 4. Añade tus credenciales de Telegram Crea un archivo config.json con este formato:\n{ \"api_id\": 123456, \"api_hash\": \"tu_api_hash\", \"chat_id\": 123456789 } El api_id y api_hash los sacas desde my.telegram.org. El chat_id es donde quieres almacenar los archivos (puede ser tuyo o un grupo/canal privado) tengo un mini tutorial de como sacar el chat_id de un grupo dentro de el post de TgRAT. Primeros pasos Lanza la herramienta con:\npython3 TgCloud.py Una vez dentro, puedes usar comandos como (para ver el menú puedes usar ‘help’):\nComando Descripción ls Lista archivos o carpetas cd Entra en una carpeta mkdir Crea una nueva carpeta virtual put Sube un archivo a Telegram get Descarga un archivo rm Elimina un archivo del sistema encryption Activa/desactiva el cifrado de archivos exit Salir del sistema 🛡️ Si activas el modo encryption, todos los archivos se cifrarán antes de subirse y se descifrarán al descargarse. La clave se guarda localmente en encryption.key.\nEjemplo real TgCloud/ \u003e mkdir backups TgCloud/ \u003e cd backups TgCloud/backups \u003e encryption [+] Encryption enabled TgCloud/backups \u003e put secret.zip [+] Encrypting file before upload... [+] Uploading secret.zip [#######---------] 60% [+] Uploaded 'secret.zip' TgCloud/backups \u003e get secret.zip [+] Downloading secret.zip [##########-----] 80% [+] Decrypting file after download... [+] Downloaded: secret.zip Con esto ya tienes tu propio sistema de almacenamiento privado, en la nube, cifrado y gratis.\nY lo mejor: lo controlas tú.\n¿Qué hay detras? TgCloudCLI esta escrito en python usando la libreria Telethon para manejar toda la comunicacion con telegram. la configuración se guarda localmente y se pueden usar multiples cuentas o canales para distribuir la carga\n📁 Código completo en GitHub:\n👉 github.com/17tayyy/TgCloudCLI\nRoadmap de lo que se viene Esto no es solo una herramienta de consola. El proyecto completo TgCloud incluirá:\nCLI funcional para uso básico (ya disponible)\nAPI REST en desarrollo (con FastAPI + Telethon)\nPanel web para gestionar archivos desde el navegador\nCifrado opcional\nCompartición de archivos\nAlgoritmo de compresión/adaptación para ficheros pesados\n¿Te mola la idea? Si te interesa el proyecto, échale un vistazo al repo, sugiéreme mejoras o abre issues.\nTodo está en código abierto y me flipa recibir feedback, ideas o incluso pull requests.\n💬 ¿Y tú? ¿Usarías Telegram como tu propio Google Drive?\nImagenes Preguntas frecuentes ¿Puedo usar TgCloudCLI con Telegram Premium?\nSí, el límite de tamaño de archivo aumenta a 4GB en cuentas Premium, lo que mejora mucho la experiencia.\n¿Qué pasa si borro el chat donde guardo los archivos?\nPerderás acceso a esos archivos, ya que Telegram los elimina. Ten cuidado de no borrar el chat o canal.\n¿Se puede compartir el almacenamiento con otros usuarios?\nPor ahora no, TgCloudCLI es para uso personal, pero la API futura abrirá opciones de colaboración.\n¿Cómo aseguro mis archivos?\nPuedes activar el cifrado para proteger tus archivos con una clave local antes de subirlos (se genera sola al usar el modo de encriptación).\nSeguridad y privacidad Aunque Telegram ofrece una solución muy práctica y potente para almacenamiento, hay que tener en cuenta algunos riesgos:\nLos metadatos de los archivos (nombres, tamaños, fechas, chat donde se guardan) quedan almacenados en Telegram, y pueden ser accesibles por ellos o en caso de brechas de seguridad. El cifrado que implementa TgCloudCLI es local y opcional, protege el contenido de los archivos pero no oculta los metadatos ni la existencia de los mismos. Por eso, si manejas información sensible, te recomiendo siempre activar el cifrado antes de subir cualquier archivo. Ten en cuenta también la seguridad de tu cuenta Telegram y la privacidad del chat o canal donde almacenes los datos. Esta opción de cifrado añade una capa extra para que solo tú puedas leer los archivos, usando una clave guardada localmente y nunca compartida en Telegram. Así que aunque alguien acceda a tu cuenta, sin la clave no podrá abrir tus archivos cifrados.\nDespedida Gracias por leer hasta aquí.\nEsto es solo el principio de lo que quiero montar con TgCloud.\nSi te mola el rollo, ¡sígueme y únete al viaje!\nSigue el proyecto 👉 Sígueme en GitHub para no perderte actualizaciones.\n📥 ¿Ideas, bugs o mejoras? ¡Abre un issue o haz una pull request!\n",
+  "wordCount" : "1274",
+  "inLanguage": "en",
+  "image":"http://localhost:1313/images/TgCloud/portada.png","datePublished": "2025-06-02T00:00:00Z",
+  "dateModified": "2025-06-02T00:00:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "17tay"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "http://localhost:1313/posts/tgcloud/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "17tay",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "http://localhost:1313/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class=" dark" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="http://localhost:1313/" accesskey="h" title="17tay (Alt + H)">17tay</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="http://localhost:1313/posts/" title="Posts">
+                    <span>Posts</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/tags/" title="Tags">
+                    <span>Tags</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/categories/" title="Categories">
+                    <span>Categories</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="http://localhost:1313/">Home</a>&nbsp;»&nbsp;<a href="http://localhost:1313/posts/">Posts</a></div>
+    <h1 class="post-title entry-hint-parent">
+      Convierte Telegram en tu nube privada: gratis, cifrada y sin límites
+    </h1>
+    <div class="post-meta"><span title='2025-06-02 00:00:00 +0000 UTC'>June 2, 2025</span>&nbsp;·&nbsp;6 min&nbsp;·&nbsp;1274 words&nbsp;·&nbsp;17tay
+
+</div>
+  </header> 
+<figure class="entry-cover">
+        <img loading="eager" src="http://localhost:1313/images/TgCloud/portada.png" alt="Imagen del post">
+        
+</figure>
+  <div class="post-content"><h2 id="índice">Índice<a hidden class="anchor" aria-hidden="true" href="#índice">#</a></h2>
+<ul>
+<li><a href="#por-qu%C3%A9-telegram-como-cloud">¿Por qué Telegram como cloud?</a></li>
+<li><a href="#qu%C3%A9-hace-tgcloudcli">¿Qué hace TgCloudCLI?</a></li>
+<li><a href="#instalaci%C3%B3n-y-configuraci%C3%B3n">Instalación y configuración</a></li>
+<li><a href="#primeros-pasos">Primeros pasos</a></li>
+<li><a href="#ejemplo-real">Ejemplo real</a></li>
+<li><a href="#qu%C3%A9-hay-detras">¿Qué hay detrás?</a></li>
+<li><a href="#roadmap-de-lo-que-se-viene">Roadmap de lo que se viene</a></li>
+<li><a href="#imagenes">Imágenes</a></li>
+<li><a href="#preguntas-frecuentes">Preguntas frecuentes</a></li>
+<li><a href="#seguridad-y-privacidad">Seguridad y privacidad</a></li>
+<li><a href="#te-mola-la-idea">¿Te mola la idea?</a></li>
+</ul>
+<h2 id="introducción">Introducción<a hidden class="anchor" aria-hidden="true" href="#introducción">#</a></h2>
+<p>¿Y si pudieras tener tu propio sistema de almacenamiento en la nube, ilimitado, gratuito y con cifrado opcional para mayor privacidad?</p>
+<p>Pues eso mismo se me ocurrió un día trasteando con un proyecto personal —concretamente <strong>TgRAT</strong>, un <em>command and control</em> sobre Telegram— cuando vi que se podían mover archivos desde un ordenador a Telegram de forma fácil y rápida. Entonces pensé: <em>&ldquo;Tío, esto se podría usar para algo mucho mejor como tu propio sistema de cloud personal&rdquo;</em>. Pero lo más bestia es que era <strong>gratis</strong> y, entre comillas, <strong>ilimitado</strong>.</p>
+<p>Digo “entre comillas” porque Telegram tiene sus límites: por ejemplo, el tamaño máximo por archivo es de 2 GB. Pero, siendo realistas, eso es más que suficiente para la mayoría de cosas. Aun así, tengo alguna idea en mente para <em>bypassear</em> esa limitación… ya iré desarrollándola más adelante.</p>
+<p>Total, que con toda esta movida nació <strong>TgCloud</strong>. Al principio era solo una herramienta CLI que convertía Telegram en tu servidor personal de archivos. Y eso es justo lo que te vengo a presentar en este post: <strong>TgCloudCLI</strong>.</p>
+<p>Le pongo &ldquo;CLI&rdquo; porque esta herramienta es solo la primera parte del proyecto TgCloud. Actualmente también estoy trabajando en una <strong>API</strong> para poder integrarlo en una web y permitir almacenar todo el contenido directamente en Telegram, de forma cómoda y accesible.</p>
+<p><strong>TgCloudCLI</strong> está desarrollada en Python, y te permite subir y descargar archivos desde Telegram, directamente desde tu terminal, sin complicaciones.</p>
+<h2 id="por-qué-telegram-como-cloud">¿Por qué Telegram como cloud?<a hidden class="anchor" aria-hidden="true" href="#por-qué-telegram-como-cloud">#</a></h2>
+<p>Mira, voy a ser sincero: <strong>Telegram lleva quemando pasta desde hace años</strong>. De verdad, no sé ni cómo no han cerrado todavía. Supongo que sobreviven gracias a las donaciones del propio Dúrov (el fundador) y a lo poco que sacan de Telegram Premium.</p>
+<p>¿Y por qué digo que queman pasta? Pues básicamente porque te ofrecen un montón de servicios gratis —entre ellos el almacenamiento en la nube— que te permite guardar <strong>teras y teras de datos sin pagar un euro</strong>. Y lo más loco es que <strong>no hay un límite realista</strong> (más allá del tamaño por archivo).</p>
+<p>Además, cuentan con:</p>
+<ul>
+<li>APIs brutales</li>
+<li>Bots rapidísimos</li>
+<li>Cero anuncios</li>
+<li>Infraestructura que responde en milisegundos</li>
+</ul>
+<p>Parece que están apostando por captar a la mayor cantidad de usuarios posible, y luego monetizar vendiendo pequeños productos o servicios (como Premium).</p>
+<p><strong>La conclusión es que Telegram no está pensado como un servicio de cloud, así que hay que ser un poco ingenioso&hellip;</strong><br>
+Y ahí es donde entra <strong>TgCloud</strong>.</p>
+<h2 id="qué-hace-tgcloudcli">¿Qué hace TgCloudCLI?<a hidden class="anchor" aria-hidden="true" href="#qué-hace-tgcloudcli">#</a></h2>
+<p><strong>TgCloudCLI</strong> es una herramienta en línea de comandos que te permite gestionar múltiples archivos usando <strong>carpetas virtuales</strong> de forma organizada. Puedes:</p>
+<ul>
+<li>Subir archivos</li>
+<li>Descargar archivos</li>
+<li>Crear carpetas</li>
+<li>Todo esto, directamente desde Telegram</li>
+</ul>
+<p>Lo bueno de TgCloudCLI es que es <strong>muy sencilla de usar</strong>, rápida y, lo mejor de todo: <strong>gratuita e ilimitada</strong> (dentro de los límites de Telegram).</p>
+<blockquote>
+<p>⚠️ Por ahora, está centrado en funcionalidades básicas. Estoy trabajando en una <strong>API REST</strong> y, más adelante, una <strong>interfaz web</strong> para gestionar los archivos desde cualquier navegador.</p>
+</blockquote>
+<h2 id="-instalación-y-configuración">🛠️ Instalación y configuración<a hidden class="anchor" aria-hidden="true" href="#-instalación-y-configuración">#</a></h2>
+<p>Configurar <strong>TgCloudCLI</strong> es muy fácil. Solo necesitas Python 3.8 o superior, una cuenta de Telegram y ganas de exprimir tu terminal.</p>
+<h3 id="1-clona-el-repositorio">1. Clona el repositorio<a hidden class="anchor" aria-hidden="true" href="#1-clona-el-repositorio">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git clone https://github.com/17tayyy/TgCloudCLI.git
+</span></span><span style="display:flex;"><span>cd TgCloudCLI
+</span></span></code></pre></div><h3 id="2-opcional-crea-un-entorno-virtual">2. (Opcional) Crea un entorno virtual<a hidden class="anchor" aria-hidden="true" href="#2-opcional-crea-un-entorno-virtual">#</a></h3>
+<p>No es obligatorio, pero recomendable:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>python3 -m venv .venv
+</span></span><span style="display:flex;"><span>source .venv/bin/activate
+</span></span></code></pre></div><h3 id="3-instala-las-dependencias">3. Instala las dependencias<a hidden class="anchor" aria-hidden="true" href="#3-instala-las-dependencias">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>pip install -r requirements.txt
+</span></span></code></pre></div><h3 id="4-añade-tus-credenciales-de-telegram">4. Añade tus credenciales de Telegram<a hidden class="anchor" aria-hidden="true" href="#4-añade-tus-credenciales-de-telegram">#</a></h3>
+<p>Crea un archivo <code>config.json</code> con este formato:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;api_id&#34;</span>: <span style="color:#ae81ff">123456</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;api_hash&#34;</span>: <span style="color:#e6db74">&#34;tu_api_hash&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;chat_id&#34;</span>: <span style="color:#ae81ff">123456789</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ul>
+<li>El <code>api_id</code> y <code>api_hash</code> los sacas desde <a href="https://my.telegram.org">my.telegram.org</a>.</li>
+<li>El <code>chat_id</code> es donde quieres almacenar los archivos (puede ser tuyo o un grupo/canal privado) tengo un mini tutorial de como sacar el chat_id de un grupo dentro de el post de <a href="https://17tay.pages.dev/posts/post-c2-sobre-telegram/#crear-grupo">TgRAT</a>.</li>
+</ul>
+<hr>
+<h2 id="primeros-pasos">Primeros pasos<a hidden class="anchor" aria-hidden="true" href="#primeros-pasos">#</a></h2>
+<p>Lanza la herramienta con:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>python3 TgCloud.py
+</span></span></code></pre></div><p>Una vez dentro, puedes usar comandos como (para ver el menú puedes usar &lsquo;help&rsquo;):</p>
+<table>
+<thead>
+<tr>
+<th>Comando</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ls</code></td>
+<td>Lista archivos o carpetas</td>
+</tr>
+<tr>
+<td><code>cd &lt;folder&gt;</code></td>
+<td>Entra en una carpeta</td>
+</tr>
+<tr>
+<td><code>mkdir &lt;name&gt;</code></td>
+<td>Crea una nueva carpeta virtual</td>
+</tr>
+<tr>
+<td><code>put &lt;archivo&gt;</code></td>
+<td>Sube un archivo a Telegram</td>
+</tr>
+<tr>
+<td><code>get &lt;archivo&gt;</code></td>
+<td>Descarga un archivo</td>
+</tr>
+<tr>
+<td><code>rm &lt;archivo&gt;</code></td>
+<td>Elimina un archivo del sistema</td>
+</tr>
+<tr>
+<td><code>encryption</code></td>
+<td>Activa/desactiva el cifrado de archivos</td>
+</tr>
+<tr>
+<td><code>exit</code></td>
+<td>Salir del sistema</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>🛡️ Si activas el modo <code>encryption</code>, todos los archivos se cifrarán antes de subirse y se descifrarán al descargarse. La clave se guarda localmente en <code>encryption.key</code>.</p>
+</blockquote>
+<hr>
+<h2 id="ejemplo-real">Ejemplo real<a hidden class="anchor" aria-hidden="true" href="#ejemplo-real">#</a></h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>TgCloud/ &gt; mkdir backups
+</span></span><span style="display:flex;"><span>TgCloud/ &gt; cd backups
+</span></span><span style="display:flex;"><span>TgCloud/backups &gt; encryption
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> Encryption enabled
+</span></span><span style="display:flex;"><span>TgCloud/backups &gt; put secret.zip
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> Encrypting file before upload...
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> Uploading secret.zip <span style="color:#f92672">[</span><span style="color:#75715e">#######---------] 60%</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> Uploaded <span style="color:#e6db74">&#39;secret.zip&#39;</span>
+</span></span><span style="display:flex;"><span>TgCloud/backups &gt; get secret.zip
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> Downloading secret.zip <span style="color:#f92672">[</span><span style="color:#75715e">##########-----] 80%</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> Decrypting file after download...
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> Downloaded: secret.zip
+</span></span></code></pre></div><hr>
+<p>Con esto ya tienes tu propio sistema de almacenamiento privado, en la nube, cifrado y gratis.<br>
+Y lo mejor: lo controlas tú.</p>
+<hr>
+<h2 id="qué-hay-detras">¿Qué hay detras?<a hidden class="anchor" aria-hidden="true" href="#qué-hay-detras">#</a></h2>
+<p>TgCloudCLI esta escrito en python usando la libreria Telethon para manejar toda la comunicacion con telegram. la configuración se guarda localmente y se pueden usar multiples cuentas o canales para distribuir la carga</p>
+<blockquote>
+<p>📁 Código completo en GitHub:<br>
+👉 <a href="https://github.com/17tayyy/TgCloudCLI">github.com/17tayyy/TgCloudCLI</a></p>
+</blockquote>
+<hr>
+<h2 id="roadmap-de-lo-que-se-viene">Roadmap de lo que se viene<a hidden class="anchor" aria-hidden="true" href="#roadmap-de-lo-que-se-viene">#</a></h2>
+<p>Esto no es solo una herramienta de consola. El proyecto completo <strong>TgCloud</strong> incluirá:</p>
+<ul>
+<li>
+<p>CLI funcional para uso básico (ya disponible)</p>
+</li>
+<li>
+<p>API REST en desarrollo (con FastAPI + Telethon)</p>
+</li>
+<li>
+<p>Panel web para gestionar archivos desde el navegador</p>
+</li>
+<li>
+<p>Cifrado opcional</p>
+</li>
+<li>
+<p>Compartición de archivos</p>
+</li>
+<li>
+<p>Algoritmo de compresión/adaptación para ficheros pesados</p>
+</li>
+</ul>
+<hr>
+<h2 id="te-mola-la-idea">¿Te mola la idea?<a hidden class="anchor" aria-hidden="true" href="#te-mola-la-idea">#</a></h2>
+<p>Si te interesa el proyecto, <strong>échale un vistazo al repo</strong>, sugiéreme mejoras o abre issues.<br>
+Todo está en código abierto y me flipa recibir feedback, ideas o incluso pull requests.</p>
+<blockquote>
+<p>💬 ¿Y tú? ¿Usarías Telegram como tu propio Google Drive?</p>
+</blockquote>
+<hr>
+<h2 id="imagenes">Imagenes<a hidden class="anchor" aria-hidden="true" href="#imagenes">#</a></h2>
+<p><img alt="Imagen1" loading="lazy" src="/images/TgCloud/image.png"></p>
+<hr>
+<p><img alt="Imagen2" loading="lazy" src="/images/TgCloud/image2.png"></p>
+<hr>
+<p><img alt="Imagen3" loading="lazy" src="/images/TgCloud/image3.png"></p>
+<h2 id="preguntas-frecuentes">Preguntas frecuentes<a hidden class="anchor" aria-hidden="true" href="#preguntas-frecuentes">#</a></h2>
+<p><strong>¿Puedo usar TgCloudCLI con Telegram Premium?</strong><br>
+Sí, el límite de tamaño de archivo aumenta a 4GB en cuentas Premium, lo que mejora mucho la experiencia.</p>
+<p><strong>¿Qué pasa si borro el chat donde guardo los archivos?</strong><br>
+Perderás acceso a esos archivos, ya que Telegram los elimina. Ten cuidado de no borrar el chat o canal.</p>
+<p><strong>¿Se puede compartir el almacenamiento con otros usuarios?</strong><br>
+Por ahora no, TgCloudCLI es para uso personal, pero la API futura abrirá opciones de colaboración.</p>
+<p><strong>¿Cómo aseguro mis archivos?</strong><br>
+Puedes activar el cifrado para proteger tus archivos con una clave local antes de subirlos (se genera sola al usar el modo de encriptación).</p>
+<h2 id="seguridad-y-privacidad">Seguridad y privacidad<a hidden class="anchor" aria-hidden="true" href="#seguridad-y-privacidad">#</a></h2>
+<p>Aunque Telegram ofrece una solución muy práctica y potente para almacenamiento, hay que tener en cuenta algunos riesgos:</p>
+<ul>
+<li>Los <strong>metadatos</strong> de los archivos (nombres, tamaños, fechas, chat donde se guardan) quedan almacenados en Telegram, y pueden ser accesibles por ellos o en caso de brechas de seguridad.</li>
+<li>El cifrado que implementa <strong>TgCloudCLI</strong> es local y opcional, protege el contenido de los archivos pero no oculta los metadatos ni la existencia de los mismos.</li>
+<li>Por eso, si manejas información sensible, <strong>te recomiendo siempre activar el cifrado</strong> antes de subir cualquier archivo.</li>
+<li>Ten en cuenta también la seguridad de tu cuenta Telegram y la privacidad del chat o canal donde almacenes los datos.</li>
+</ul>
+<p>Esta opción de cifrado añade una capa extra para que solo tú puedas leer los archivos, usando una clave guardada localmente y nunca compartida en Telegram. Así que aunque alguien acceda a tu cuenta, sin la clave no podrá abrir tus archivos cifrados.</p>
+<hr>
+<h2 id="despedida">Despedida<a hidden class="anchor" aria-hidden="true" href="#despedida">#</a></h2>
+<p>Gracias por leer hasta aquí.<br>
+Esto es solo el principio de lo que quiero montar con TgCloud.<br>
+Si te mola el rollo, ¡sígueme y únete al viaje!</p>
+<h3 id="sigue-el-proyecto">Sigue el proyecto<a hidden class="anchor" aria-hidden="true" href="#sigue-el-proyecto">#</a></h3>
+<p>👉 Sígueme en <a href="https://github.com/17tayyy">GitHub</a> para no perderte actualizaciones.<br>
+📥 ¿Ideas, bugs o mejoras? ¡Abre un issue o haz una pull request!</p>
+<hr>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="http://localhost:1313/tags/cloud/">Cloud</a></li>
+      <li><a href="http://localhost:1313/tags/python/">Python</a></li>
+      <li><a href="http://localhost:1313/tags/blog/">Blog</a></li>
+      <li><a href="http://localhost:1313/tags/telegram/">Telegram</a></li>
+    </ul>
+<nav class="paginav">
+  <a class="next" href="http://localhost:1313/posts/como-ser-anonimo-en-internet/">
+    <span class="title">Next »</span>
+    <br>
+    <span>Como ser 100% anónimo en internet</span>
+  </a>
+</nav>
+
+  </footer>
+</article>
+    </main>
+    
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>Python on 17tay</title>
-    <link>http://localhost:1313/tags/python/</link>
-    <description>Recent content in Python on 17tay</description>
+    <title>Telegram on 17tay</title>
+    <link>http://localhost:1313/tags/telegram/</link>
+    <description>Recent content in Telegram on 17tay</description>
     <generator>Hugo -- 0.131.0</generator>
     <language>en-us</language>
     <lastBuildDate>Mon, 02 Jun 2025 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/tags/python/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/telegram/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>TgCloud: Tu propia nube ilimitada y gratuita con Telegram [CLI &#43; cifrado, código abierto]</title>
       <link>http://localhost:1313/posts/tgcloud/</link>
@@ -15,14 +15,6 @@
       <guid>http://localhost:1313/posts/tgcloud/</guid>
       <description>Índice ¿Por qué Telegram como cloud? ¿Qué hace TgCloudCLI? Instalación y configuración Primeros pasos Ejemplo real ¿Qué hay detrás? Roadmap de lo que se viene Imágenes Preguntas frecuentes Seguridad y privacidad ¿Te mola la idea? Introducción ¿Y si pudieras tener tu propio sistema de almacenamiento en la nube, ilimitado, gratuito y con cifrado opcional para mayor privacidad?
 Pues eso mismo se me ocurrió un día trasteando con un proyecto personal —concretamente TgRAT, un command and control sobre Telegram— cuando vi que se podían mover archivos desde un ordenador a Telegram de forma fácil y rápida.</description>
-    </item>
-    <item>
-      <title>Controlando bots con Telegram: así hice mi propio C2</title>
-      <link>http://localhost:1313/posts/post-c2-sobre-telegram/</link>
-      <pubDate>Tue, 25 Mar 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/post-c2-sobre-telegram/</guid>
-      <description>Introdución En este post voy a explicar como desarrollé un sistema de Command and Control (C2) utilizando Telegram como canal de comunicaciones. La idea era tener algo desplegable desde cualquier dispositivo, que fuera discreto y que no dependiera de servidores caros o infraestructuras complejas, Entonces valoré dos opciones o Discord o Telegram, ya que la implementación de sus APIs es fácil de usar, al final me quedé con Telegram.
-¿Por qué Telegram?</description>
     </item>
   </channel>
 </rss>
