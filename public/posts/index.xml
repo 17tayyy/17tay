@@ -4,47 +4,70 @@
     <title>Posts on 17tay</title>
     <link>http://localhost:1313/posts/</link>
     <description>Recent content in Posts on 17tay</description>
-    <generator>Hugo -- 0.131.0</generator>
+    <generator>Hugo -- 0.148.0</generator>
     <language>en-us</language>
     <lastBuildDate>Mon, 02 Jun 2025 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>TgCloud: Tu propia nube ilimitada y gratuita con Telegram [CLI &#43; cifrado, código abierto]</title>
+      <title>📌 Fijado, Hola, soy Tay</title>
+      <link>http://localhost:1313/posts/primer-post/</link>
+      <pubDate>Wed, 01 Jan 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/primer-post/</guid>
+      <description>Carta de presentación: quién soy, qué hago y qué busco</description>
+    </item>
+    <item>
+      <title>Convierte Telegram en tu nube privada: gratis, cifrada y sin límites</title>
       <link>http://localhost:1313/posts/tgcloud/</link>
       <pubDate>Mon, 02 Jun 2025 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/posts/tgcloud/</guid>
-      <description>Índice ¿Por qué Telegram como cloud? ¿Qué hace TgCloudCLI? Instalación y configuración Primeros pasos Ejemplo real ¿Qué hay detrás? Roadmap de lo que se viene Imágenes Preguntas frecuentes Seguridad y privacidad ¿Te mola la idea? Introducción ¿Y si pudieras tener tu propio sistema de almacenamiento en la nube, ilimitado, gratuito y con cifrado opcional para mayor privacidad?
-Pues eso mismo se me ocurrió un día trasteando con un proyecto personal —concretamente TgRAT, un command and control sobre Telegram— cuando vi que se podían mover archivos desde un ordenador a Telegram de forma fácil y rápida.</description>
+      <description>&lt;h2 id=&#34;índice&#34;&gt;Índice&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#por-qu%C3%A9-telegram-como-cloud&#34;&gt;¿Por qué Telegram como cloud?&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#qu%C3%A9-hace-tgcloudcli&#34;&gt;¿Qué hace TgCloudCLI?&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#instalaci%C3%B3n-y-configuraci%C3%B3n&#34;&gt;Instalación y configuración&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#primeros-pasos&#34;&gt;Primeros pasos&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#ejemplo-real&#34;&gt;Ejemplo real&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#qu%C3%A9-hay-detras&#34;&gt;¿Qué hay detrás?&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#roadmap-de-lo-que-se-viene&#34;&gt;Roadmap de lo que se viene&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#imagenes&#34;&gt;Imágenes&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#preguntas-frecuentes&#34;&gt;Preguntas frecuentes&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#seguridad-y-privacidad&#34;&gt;Seguridad y privacidad&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#te-mola-la-idea&#34;&gt;¿Te mola la idea?&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;introducción&#34;&gt;Introducción&lt;/h2&gt;
+&lt;p&gt;¿Y si pudieras tener tu propio sistema de almacenamiento en la nube, ilimitado, gratuito y con cifrado opcional para mayor privacidad?&lt;/p&gt;
+&lt;p&gt;Pues eso mismo se me ocurrió un día trasteando con un proyecto personal —concretamente &lt;strong&gt;TgRAT&lt;/strong&gt;, un &lt;em&gt;command and control&lt;/em&gt; sobre Telegram— cuando vi que se podían mover archivos desde un ordenador a Telegram de forma fácil y rápida. Entonces pensé: &lt;em&gt;&amp;ldquo;Tío, esto se podría usar para algo mucho mejor como tu propio sistema de cloud personal&amp;rdquo;&lt;/em&gt;. Pero lo más bestia es que era &lt;strong&gt;gratis&lt;/strong&gt; y, entre comillas, &lt;strong&gt;ilimitado&lt;/strong&gt;.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Como ser 100% anónimo en internet</title>
       <link>http://localhost:1313/posts/como-ser-anonimo-en-internet/</link>
       <pubDate>Mon, 21 Apr 2025 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/posts/como-ser-anonimo-en-internet/</guid>
-      <description>Índice Introducción Explicación
-2.1. ¿Qué es una VPN?
-2.2. Tor
-2.3. ¿Qué es el fingerprinting?
-2.4. Diferencia entre anonimato y privacidad
-2.5. ¿Qué es una máquina virtual y por qué es útil? Mi idea: &amp;ldquo;Anonimato en capas&amp;rdquo; Introducción Hoy en dia, vivimos en una época donde cada clic, cada búsqueda y cada conexión que hacemos deja un rastro. Redes publicitarias, corporaciones, mafias y hasta Gobiernos pelean por tus datos, por saber quién eres, qué haces y por qué.</description>
+      <description>&lt;h2 id=&#34;índice&#34;&gt;Índice&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&#34;#introducci%C3%B3n&#34;&gt;Introducción&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#explicaci%C3%B3n&#34;&gt;Explicación&lt;/a&gt;&lt;br&gt;
+2.1. &lt;a href=&#34;#qu%C3%A9-es-una-vpn&#34;&gt;¿Qué es una VPN?&lt;/a&gt;&lt;br&gt;
+2.2. &lt;a href=&#34;#tor&#34;&gt;Tor&lt;/a&gt;&lt;br&gt;
+2.3. &lt;a href=&#34;#qu%C3%A9-es-el-fingerprinting&#34;&gt;¿Qué es el fingerprinting?&lt;/a&gt;&lt;br&gt;
+2.4. &lt;a href=&#34;#qu%C3%A9-diferencia-hay-entre-anonimato-y-privacidad&#34;&gt;Diferencia entre anonimato y privacidad&lt;/a&gt;&lt;br&gt;
+2.5. &lt;a href=&#34;#qu%C3%A9-es-una-m%C3%A1quina-virtual-y-por-qu%C3%A9-es-%C3%BAtil-en-este-contexto&#34;&gt;¿Qué es una máquina virtual y por qué es útil?&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#mi-idea-anonimato-en-capas&#34;&gt;Mi idea: &amp;ldquo;Anonimato en capas&amp;rdquo;&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;introducción&#34;&gt;Introducción&lt;/h2&gt;
+&lt;p&gt;Hoy en dia, vivimos en una época donde cada &lt;strong&gt;clic&lt;/strong&gt;, cada &lt;strong&gt;búsqueda&lt;/strong&gt; y cada &lt;strong&gt;conexión&lt;/strong&gt; que hacemos deja un &lt;strong&gt;rastro&lt;/strong&gt;. Redes publicitarias, &lt;strong&gt;corporaciones&lt;/strong&gt;, &lt;strong&gt;mafias&lt;/strong&gt; y hasta &lt;strong&gt;Gobiernos&lt;/strong&gt; pelean por tus &lt;strong&gt;datos&lt;/strong&gt;, por saber quién eres, qué haces y por qué. La privacidad se ha convertido en un privilegio, y el &lt;strong&gt;anonimato&lt;/strong&gt;&amp;hellip; en una &lt;strong&gt;lucha&lt;/strong&gt;&lt;/p&gt;</description>
     </item>
     <item>
       <title>Controlando bots con Telegram: así hice mi propio C2</title>
       <link>http://localhost:1313/posts/post-c2-sobre-telegram/</link>
       <pubDate>Tue, 25 Mar 2025 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/posts/post-c2-sobre-telegram/</guid>
-      <description>Introdución En este post voy a explicar como desarrollé un sistema de Command and Control (C2) utilizando Telegram como canal de comunicaciones. La idea era tener algo desplegable desde cualquier dispositivo, que fuera discreto y que no dependiera de servidores caros o infraestructuras complejas, Entonces valoré dos opciones o Discord o Telegram, ya que la implementación de sus APIs es fácil de usar, al final me quedé con Telegram.
-¿Por qué Telegram?</description>
-    </item>
-    <item>
-      <title>¿Quién soy y qué hago aquí?</title>
-      <link>http://localhost:1313/posts/primer-post/</link>
-      <pubDate>Mon, 24 Mar 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/primer-post/</guid>
-      <description>Soy tay, un chaval de 17 años que le encanta la ciberseguridad ofensiva, la programación, el pentesting y romper cosas para entenderlas.
-He montado este blog para compartir:
-Proyectos técnicos (malwares, C2s, scripts&amp;hellip;) Writeups de CTFs y máquinas (HTB, etc.) Cosillas de programación y reversing Avances, ideas y errores en el camino Estoy en GitHub, Hack The Box, y en mil terminales abiertas a la vez.
-¡Bienvenido a mi blog!</description>
+      <description>&lt;h1 id=&#34;introdución&#34;&gt;Introdución&lt;/h1&gt;
+&lt;p&gt;En este post voy a explicar como desarrollé un sistema de &lt;strong&gt;Command and Control (C2)&lt;/strong&gt; utilizando &lt;strong&gt;Telegram&lt;/strong&gt; como canal de comunicaciones. La idea era tener algo desplegable desde cualquier dispositivo, que fuera discreto y que no dependiera de servidores caros o infraestructuras complejas, Entonces valoré dos opciones o &lt;strong&gt;Discord&lt;/strong&gt; o &lt;strong&gt;Telegram&lt;/strong&gt;, ya que la implementación de sus &lt;strong&gt;APIs&lt;/strong&gt; es fácil de usar, al final me quedé con Telegram.&lt;/p&gt;
+&lt;h2 id=&#34;por-qué-telegram&#34;&gt;¿Por qué Telegram?&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Es gratuito&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>

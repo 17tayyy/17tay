@@ -4,7 +4,7 @@
     <title>Tags on 17tay</title>
     <link>http://localhost:1313/tags/</link>
     <description>Recent content in Tags on 17tay</description>
-    <generator>Hugo -- 0.131.0</generator>
+    <generator>Hugo -- 0.148.0</generator>
     <language>en-us</language>
     <lastBuildDate>Mon, 02 Jun 2025 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/tags/index.xml" rel="self" type="application/rss+xml" />
@@ -95,8 +95,15 @@
     <item>
       <title>Presentación</title>
       <link>http://localhost:1313/tags/presentaci%C3%B3n/</link>
-      <pubDate>Mon, 24 Mar 2025 00:00:00 +0000</pubDate>
+      <pubDate>Wed, 01 Jan 2025 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/tags/presentaci%C3%B3n/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Sobre Mí</title>
+      <link>http://localhost:1313/tags/sobre-m%C3%AD/</link>
+      <pubDate>Wed, 01 Jan 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/sobre-m%C3%AD/</guid>
       <description></description>
     </item>
   </channel>

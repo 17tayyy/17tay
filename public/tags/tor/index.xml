@@ -4,7 +4,7 @@
     <title>Tor on 17tay</title>
     <link>http://localhost:1313/tags/tor/</link>
     <description>Recent content in Tor on 17tay</description>
-    <generator>Hugo -- 0.131.0</generator>
+    <generator>Hugo -- 0.148.0</generator>
     <language>en-us</language>
     <lastBuildDate>Mon, 21 Apr 2025 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/tags/tor/index.xml" rel="self" type="application/rss+xml" />
@@ -13,12 +13,19 @@
       <link>http://localhost:1313/posts/como-ser-anonimo-en-internet/</link>
       <pubDate>Mon, 21 Apr 2025 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/posts/como-ser-anonimo-en-internet/</guid>
-      <description>Índice Introducción Explicación
-2.1. ¿Qué es una VPN?
-2.2. Tor
-2.3. ¿Qué es el fingerprinting?
-2.4. Diferencia entre anonimato y privacidad
-2.5. ¿Qué es una máquina virtual y por qué es útil? Mi idea: &amp;ldquo;Anonimato en capas&amp;rdquo; Introducción Hoy en dia, vivimos en una época donde cada clic, cada búsqueda y cada conexión que hacemos deja un rastro. Redes publicitarias, corporaciones, mafias y hasta Gobiernos pelean por tus datos, por saber quién eres, qué haces y por qué.</description>
+      <description>&lt;h2 id=&#34;índice&#34;&gt;Índice&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&#34;#introducci%C3%B3n&#34;&gt;Introducción&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#explicaci%C3%B3n&#34;&gt;Explicación&lt;/a&gt;&lt;br&gt;
+2.1. &lt;a href=&#34;#qu%C3%A9-es-una-vpn&#34;&gt;¿Qué es una VPN?&lt;/a&gt;&lt;br&gt;
+2.2. &lt;a href=&#34;#tor&#34;&gt;Tor&lt;/a&gt;&lt;br&gt;
+2.3. &lt;a href=&#34;#qu%C3%A9-es-el-fingerprinting&#34;&gt;¿Qué es el fingerprinting?&lt;/a&gt;&lt;br&gt;
+2.4. &lt;a href=&#34;#qu%C3%A9-diferencia-hay-entre-anonimato-y-privacidad&#34;&gt;Diferencia entre anonimato y privacidad&lt;/a&gt;&lt;br&gt;
+2.5. &lt;a href=&#34;#qu%C3%A9-es-una-m%C3%A1quina-virtual-y-por-qu%C3%A9-es-%C3%BAtil-en-este-contexto&#34;&gt;¿Qué es una máquina virtual y por qué es útil?&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#mi-idea-anonimato-en-capas&#34;&gt;Mi idea: &amp;ldquo;Anonimato en capas&amp;rdquo;&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;introducción&#34;&gt;Introducción&lt;/h2&gt;
+&lt;p&gt;Hoy en dia, vivimos en una época donde cada &lt;strong&gt;clic&lt;/strong&gt;, cada &lt;strong&gt;búsqueda&lt;/strong&gt; y cada &lt;strong&gt;conexión&lt;/strong&gt; que hacemos deja un &lt;strong&gt;rastro&lt;/strong&gt;. Redes publicitarias, &lt;strong&gt;corporaciones&lt;/strong&gt;, &lt;strong&gt;mafias&lt;/strong&gt; y hasta &lt;strong&gt;Gobiernos&lt;/strong&gt; pelean por tus &lt;strong&gt;datos&lt;/strong&gt;, por saber quién eres, qué haces y por qué. La privacidad se ha convertido en un privilegio, y el &lt;strong&gt;anonimato&lt;/strong&gt;&amp;hellip; en una &lt;strong&gt;lucha&lt;/strong&gt;&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>

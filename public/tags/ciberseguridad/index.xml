@@ -4,7 +4,7 @@
     <title>Ciberseguridad on 17tay</title>
     <link>http://localhost:1313/tags/ciberseguridad/</link>
     <description>Recent content in Ciberseguridad on 17tay</description>
-    <generator>Hugo -- 0.131.0</generator>
+    <generator>Hugo -- 0.148.0</generator>
     <language>en-us</language>
     <lastBuildDate>Tue, 25 Mar 2025 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/tags/ciberseguridad/index.xml" rel="self" type="application/rss+xml" />
@@ -13,18 +13,12 @@
       <link>http://localhost:1313/posts/post-c2-sobre-telegram/</link>
       <pubDate>Tue, 25 Mar 2025 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/posts/post-c2-sobre-telegram/</guid>
-      <description>Introdución En este post voy a explicar como desarrollé un sistema de Command and Control (C2) utilizando Telegram como canal de comunicaciones. La idea era tener algo desplegable desde cualquier dispositivo, que fuera discreto y que no dependiera de servidores caros o infraestructuras complejas, Entonces valoré dos opciones o Discord o Telegram, ya que la implementación de sus APIs es fácil de usar, al final me quedé con Telegram.
-¿Por qué Telegram?</description>
-    </item>
-    <item>
-      <title>¿Quién soy y qué hago aquí?</title>
-      <link>http://localhost:1313/posts/primer-post/</link>
-      <pubDate>Mon, 24 Mar 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/primer-post/</guid>
-      <description>Soy tay, un chaval de 17 años que le encanta la ciberseguridad ofensiva, la programación, el pentesting y romper cosas para entenderlas.
-He montado este blog para compartir:
-Proyectos técnicos (malwares, C2s, scripts&amp;hellip;) Writeups de CTFs y máquinas (HTB, etc.) Cosillas de programación y reversing Avances, ideas y errores en el camino Estoy en GitHub, Hack The Box, y en mil terminales abiertas a la vez.
-¡Bienvenido a mi blog!</description>
+      <description>&lt;h1 id=&#34;introdución&#34;&gt;Introdución&lt;/h1&gt;
+&lt;p&gt;En este post voy a explicar como desarrollé un sistema de &lt;strong&gt;Command and Control (C2)&lt;/strong&gt; utilizando &lt;strong&gt;Telegram&lt;/strong&gt; como canal de comunicaciones. La idea era tener algo desplegable desde cualquier dispositivo, que fuera discreto y que no dependiera de servidores caros o infraestructuras complejas, Entonces valoré dos opciones o &lt;strong&gt;Discord&lt;/strong&gt; o &lt;strong&gt;Telegram&lt;/strong&gt;, ya que la implementación de sus &lt;strong&gt;APIs&lt;/strong&gt; es fácil de usar, al final me quedé con Telegram.&lt;/p&gt;
+&lt;h2 id=&#34;por-qué-telegram&#34;&gt;¿Por qué Telegram?&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Es gratuito&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>

@@ -2,13 +2,13 @@ baseURL = "https://17tay.pages.dev/"
 languageCode = "en-us"
 title = "17tay"
 theme = "PaperMod"
-paginate = 10
+[pagination]
+  pagerSize = 10
 enableInlineShortcodes = true
 buildDrafts = false
 buildFuture = false
 buildExpired = false
 defaultContentLanguage = "en"
-googleAnalytics = ""
 disqusShortname = ""
 
 [params]
@@ -26,6 +26,7 @@ disqusShortname = ""
   ShowPostNavLinks = true
   ShowBreadCrumbs = true
   ShowCodeCopyButtons = true
+  showFeaturedPosts = true
   defaultTheme = "dark"
   disableThemeToggle = false
   ShowWordCount = true
